@@ -118,3 +118,6 @@ fabric.properties
 .idea/**/markdown-navigator/
 
 # End of https://www.gitignore.io/api/intellij
+
+#test Image
+src/test_image/
