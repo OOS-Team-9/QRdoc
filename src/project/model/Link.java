@@ -1,10 +1,11 @@
-package project.model
+package project.model;
 
 public class Link {
     private String link;
     private int pageNum;
 
-    Link(String address){
+    public Link(int pgeNum,String address){
+        this.pageNum=pgeNum;
         this.link=address;
     }
 
