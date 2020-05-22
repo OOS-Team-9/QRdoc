@@ -121,3 +121,6 @@ fabric.properties
 
 #test Image
 src/test_image/
+
+#lib
+lib/
