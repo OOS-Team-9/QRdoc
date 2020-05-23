@@ -1,9 +1,12 @@
 package project.view;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -142,10 +145,10 @@ public class MainViewController implements Initializable {
 
 	void makeTempPDF(){
 		System.out.println(myDoc.getNumberOfPages());
-		String[] temp = myDoc.conversionPdf2Img();
+		BufferedImage[] temp = myDoc.conversionPdf2Img();
 		image = new Image[temp.length];
 		for(int i = 0; i < temp.length; i++){
-			image[i] = new Image("@../../test_image/"+ temp[i]);
+			image[i] = SwingFXUtils.toFXImage(temp[i],null);
 		}
 	}
 
