@@ -104,6 +104,13 @@ public class MainViewController implements Initializable {
 			}
 		});
 		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
+			try {
+				LinkExtracter linkExtracter=new LinkExtracter(myDoc);
+				linkExtracter.readTexts();
+				linkExtracter.extractLinks();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 			makeTempPDF();
 			showTempPDF();
