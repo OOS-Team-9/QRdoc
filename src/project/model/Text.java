@@ -11,7 +11,7 @@ public class Text {
     public String getText(){
         return this.text;
     }
-    int getPageNum(){
+    public int getPageNum(){
         return this.pageNum;}
 
     public void setText(String buffer){

@@ -13,48 +13,68 @@ public class LinkExtracter {
     private MyDoc doc;
     private int pageNum;
     private ArrayList<Text> textList= new ArrayList<>();       //texts[0]에는 1쪽의 Text객체 담김
-    private ArrayList<ArrayList> linkList= new ArrayList<>();  //links[0]에는 1쪽의 링크들의 ArrayList가 담김
+    private ArrayList<ArrayList<Link>> linkList= new ArrayList<>();  //links[0]에는 1쪽의 링크들의 ArrayList가 담김
     private PDFTextStripper stripper= new PDFTextStripper();
-    private Pattern pattern=Pattern.compile("(([^:/?#@]+):)?((//)?([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?");
+    private Pattern pattern=Pattern.compile("(([^\\:/\\?#@\\s]+):)?((//)?([^/\\?#\\s]]+))?[^\\?#\\s]*(\\?([^#\\s]+))?(#\\S+)?");
+    private Pattern sPattern=Pattern.compile("\\s*");
 
-    LinkExtracter(MyDoc doc) throws IOException {
+    public LinkExtracter(MyDoc doc) throws IOException {
         this.doc=doc;
         this.pageNum=doc.getNumberOfPages();
     }
-    void readTexts() throws IOException {
+    public void readTexts() throws IOException {
         String buffer=new String();
-        for(int i=1;i<=pageNum;i++){
-            stripper.setStartPage(i);
-            stripper.setEndPage(i);
+        for(int i=0;i<pageNum;i++){
+           // System.out.println("i: "+i);
+            stripper.setStartPage(i+1);
+            stripper.setEndPage(i+1);
 
             textList.add(new Text(i));
 
             buffer=stripper.getText(doc);
             textList.get(i).setText(buffer);
-
+            //System.out.println("page"+i+" text:"+textList.get(i).getText());
         }
     }
-    void extractLinks(){
+    public void extractLinks(){
         for(int i=0;i<pageNum;i++){
-            linkList.add(new ArrayList<String>());
+            linkList.add(new ArrayList<Link>());
             Matcher matcher =pattern.matcher(textList.get(i).getText());
+            Link tempLk;
+            Matcher sMatcher;
+            while(matcher.find()) {
+                tempLk=new Link(i, matcher.group());
+                sMatcher=sPattern.matcher(tempLk.getLink());
+                if(sMatcher.matches())
+                    continue;
 
-            for(int j=0;matcher.find();j++){
-                linkList.get(i).add(new Link(i,matcher.group()));
+                linkList.get(i).add(new Link(i, tempLk.getLink()));
             }
+            //System.out.println(linkList.get(i).size());
+            /*
+            for(int j=0;j<linkList.get(i).size();j++){
+                System.out.println("page"+i+" linkNum"+j+": "+linkList.get(i).get(j).getLink());
+            }
+             */
         }
     }
 
-    Text getTextAt(int pageNum) {
+    public Text getTextAt(int pageNum) {
         if(pageNum > this.pageNum)
             return null;
         return textList.get(pageNum - 1);
     }
-    
-    ArrayList getLinksAt(int pageNum){
+
+    public ArrayList<Link> getLinksAt(int pageNum){
         if(pageNum>this.pageNum)
             return null;
         return linkList.get(pageNum - 1);
+    }
+    public ArrayList<Text> getTextList(){
+        return textList;
+    }
+    public ArrayList<ArrayList<Link>> getLinkList(){
+        return linkList;
     }
 
 }

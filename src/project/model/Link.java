@@ -9,17 +9,17 @@ public class Link {
         this.link=address;
     }
 
-    String getLink(){
+    public String getLink(){
         return this.link;
     }
-    int getPageNum(){
+    public int getPageNum(){
         return this.pageNum;
     }
 
-    void resetLink(String address){
+    public void resetLink(String address){
         this.link=address;
     }
-    void resetPageNum(int pgeNum){
+    public void resetPageNum(int pgeNum){
         this.pageNum=pgeNum;
     }
 }
