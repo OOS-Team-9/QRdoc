@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import project.controller.FileStream;
 import project.model.MyDoc;
 import project.Main;
+import project.controller.LinkExtracter;
 
 public class MainViewController implements Initializable {
 	int nowPage = 0;
@@ -100,6 +101,7 @@ public class MainViewController implements Initializable {
 			}
 		});
 		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
+
 			makeTempPDF();
 			showTempPDF();
 		});
