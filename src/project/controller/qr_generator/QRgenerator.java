@@ -24,7 +24,7 @@ public abstract class QRgenerator {
     }
 
     /*중간에 이미지 파일이 저장될 디렉토리를 바꿔야 하는 경우, 이 함수를 호출한다.*/
-    void setOutputDirectory(String outputDirectory){
+    public void resetOutputDirectory(String outputDirectory){
         this.outputDirectory=outputDirectory;
     }
 

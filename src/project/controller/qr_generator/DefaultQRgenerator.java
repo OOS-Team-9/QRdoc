@@ -19,11 +19,11 @@ public class DefaultQRgenerator extends QRgenerator {
         super(outputDirectory);
     }
 
-    DefaultQRgenerator(DefaultQRgenerator other) {
+    public DefaultQRgenerator(DefaultQRgenerator other) {
         super(other);
     }
 
-    DefaultQRgenerator() {
+    public DefaultQRgenerator() {
         super();
     }
 
