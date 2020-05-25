@@ -1,8 +1,8 @@
-package QRgenerator;
+package project.controller.qr_generator;
 
-import Exception.WidthHeightNegativeException;
-import Information.Information;
 import com.google.zxing.WriterException;
+import project.model.exception.WidthHeightNegativeException;
+import project.model.information.Information;
 
 import java.io.IOException;
 

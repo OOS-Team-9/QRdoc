@@ -1,4 +1,4 @@
-package Information;
+package project.model.information;
 
 /*문서에서 추출할 정보 클래스
 * Link 클래스가 이 클래스를 상속한다.*/
