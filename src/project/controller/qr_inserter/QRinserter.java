@@ -1,11 +1,10 @@
-package project.controller;
+package project.controller.qr_inserter;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
