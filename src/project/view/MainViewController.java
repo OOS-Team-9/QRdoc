@@ -104,9 +104,10 @@ public class MainViewController implements Initializable {
 		});
 		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
 			try {
-				LinkExtractor linkExtracter=new LinkExtractor(myDoc);
-				linkExtracter.readTexts();
-				linkExtracter.extract();
+				LinkExtractor linkExtractor=new LinkExtractor(myDoc);
+				linkExtractor.readTexts();
+				linkExtractor.extract();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
