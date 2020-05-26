@@ -24,13 +24,14 @@ public class LinkExtractor extends Extractor<Link> {
     public LinkExtractor(MyDoc doc) throws IOException {
         super(doc);
         //링크 패턴 설정
-        pattern=Pattern.compile("(([^\\:/\\?#@\\s]+):)?((//)?([^/\\?#\\s]]+))?[^\\?#\\s]*(\\?([^#\\s]+))?(#\\S+)?");
-        sPattern=Pattern.compile("\\s*");
 
-        /*
+        sPattern=Pattern.compile("\\s*");
+        pattern =Pattern.compile("([^\\:/\\?#@\\s]+://.+)?(www\\..+)");
+/*
         pattern = Pattern.compile("(((http(s)?:\\\\/\\\\/)\\\\S+(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+)|((http(s)?:\\\\/\\\\/)?\" +\n" +
                 "(([a-zA-z\\\\-_]+[0-9]*)|([0-9]*[a-zA-z\\\\-_]+)){2,}(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+))+");
-        */
+
+ */
 }
 
     /**
@@ -52,7 +53,6 @@ public class LinkExtractor extends Extractor<Link> {
                 sMatcher=sPattern.matcher(tempLk.getLink());
                 if(sMatcher.matches())
                     continue;
-
                 System.out.println("test:"+tempLk.getLink());
                 infoList.get(i).add(new Link(tempLk.getLink(),i,i));
             }
