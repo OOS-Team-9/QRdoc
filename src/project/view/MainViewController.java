@@ -1,11 +1,5 @@
 package project.view;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,10 +15,16 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import project.controller.FileStream;
-import project.model.MyDoc;
 import project.Main;
-import project.controller.LinkExtracter;
+import project.controller.FileStream;
+import project.controller.extractor.LinkExtractor;
+import project.model.MyDoc;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
 	int nowPage = 0;
@@ -105,9 +104,10 @@ public class MainViewController implements Initializable {
 		});
 		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
 			try {
-				LinkExtracter linkExtracter=new LinkExtracter(myDoc);
-				linkExtracter.readTexts();
-				linkExtracter.extractLinks();
+				LinkExtractor linkExtractor=new LinkExtractor(myDoc);
+				linkExtractor.readTexts();
+				linkExtractor.extract();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
