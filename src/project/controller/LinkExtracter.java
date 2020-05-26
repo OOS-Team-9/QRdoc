@@ -15,7 +15,8 @@ public class LinkExtracter {
     private ArrayList<Text> textList= new ArrayList<>();       //texts[0]에는 1쪽의 Text객체 담김
     private ArrayList<ArrayList<Link>> linkList= new ArrayList<>();  //links[0]에는 1쪽의 링크들의 ArrayList가 담김
     private PDFTextStripper stripper= new PDFTextStripper();
-    private Pattern pattern=Pattern.compile("(([^\\:/\\?#@\\s]+):)?((//)?([^/\\?#\\s]]+))?[^\\?#\\s]*(\\?([^#\\s]+))?(#\\S+)?");
+    //private Pattern pattern=Pattern.compile("(([^\\:/\\?#@\\s]+):)?((//)?([^/\\?#\\s]]+))?[^\\?#\\s]*(\\?([^#\\s]+))?(#\\S+)?");
+    private Pattern pattern=Pattern.compile("([^\\:/\\?#@\\s]+://.+)(www\\..+)?|(www\\..+)");
     private Pattern sPattern=Pattern.compile("\\s*");
 
     public LinkExtracter(MyDoc doc) throws IOException {
@@ -51,11 +52,12 @@ public class LinkExtracter {
                 linkList.get(i).add(new Link(i, tempLk.getLink()));
             }
             //System.out.println(linkList.get(i).size());
-            /*
+
             for(int j=0;j<linkList.get(i).size();j++){
                 System.out.println("page"+i+" linkNum"+j+": "+linkList.get(i).get(j).getLink());
             }
-             */
+
+
         }
     }
 

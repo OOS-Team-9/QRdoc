@@ -1,8 +1,11 @@
 package project.model;
 
+import org.apache.pdfbox.text.TextPosition;
+
 public class Link {
     private String link;
     private int pageNum;
+
 
     public Link(int pgeNum,String address){
         this.pageNum=pgeNum;
