@@ -5,7 +5,6 @@ import project.model.MyDoc;
 import project.model.information.Information;
 import project.model.Page;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -21,16 +20,8 @@ abstract public class Extractor<T extends Information> {
     protected ArrayList<Page> pageList; //문서 안 모든 페이지 정보
 
     protected Pattern pattern;           //특정한 패턴
-
     protected ArrayList<ArrayList<T>> infoList;  //문서 안에서 특정한 패턴을 만족하는 모든 문자열 정보
     protected PDFTextStripper stripper;  //문서를 파싱하는 기계
-
-
-
-     //links[0]에는 1쪽의 링크들의 ArrayList가 담김
-
-
-
 
     /**
      * 생성자
@@ -72,7 +63,8 @@ abstract public class Extractor<T extends Information> {
             buffer = stripper.getText(doc);
             //페이지 안 문자열을 페이지 객체에 저장
             pageList.get(i).setText(buffer);
-            System.out.println("page"+i+" text:\n"+pageList.get(i).getText());
+            System.out.println("-------------page [ "+i+" ]-------------");
+            System.out.println(pageList.get(i).getText());
         }
     }
 
@@ -80,25 +72,28 @@ abstract public class Extractor<T extends Information> {
      * 문서 안에서 특정 패턴을 만족하는 문자열을 추출하는 함수
      * 실행 순서: 생성자 호출 -> readTexts 호출 -> extract 호출 -> getInfoList 호출
      */
-    abstract public void extract();
-    /* {
+    public void extract() {
+        System.out.println("-------------파싱 시작-------------");
         Matcher matcher;
         //페이지 하나씩 확인
         for (int pageOrder = 0; pageOrder < pageNum; pageOrder++) {
+            System.out.println("-------------page [ "+pageOrder+" ]-------------");
             infoList.add(new ArrayList<>());
 
             //특정 패턴을 만족하는 문자열 추출
             matcher = pattern.matcher(pageList.get(pageOrder).getText());
 
-            //이 문자열을 배열에 저장
+            /*이 문자열을 배열에 저장*/
             for (int infoOrder = 0; matcher.find(); infoOrder++) {
                 infoList.get(pageOrder).add((T)(new Information(matcher.group(), matcher.start(), infoOrder)));
+                System.out.print("order: ");
+                System.out.println(infoList.get(pageOrder).get(infoList.get(pageOrder).size()-1).getOrder());
+                System.out.print("text: ");
+                System.out.println(infoList.get(pageOrder).get(infoList.get(pageOrder).size()-1).getText());
+                System.out.print("pos: ");
+                System.out.println(infoList.get(pageOrder).get(infoList.get(pageOrder).size()-1).getTextPos());
+                System.out.print("\n");
             }
         }
     }
-    */
-
-
 }
-
-
