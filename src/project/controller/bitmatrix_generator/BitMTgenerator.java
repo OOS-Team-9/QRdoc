@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * 모든 bit matrix generator의 공통 분모
  */
-public abstract class BitMTGenerator {
+public abstract class BitMTgenerator {
 
     /**
      * QR코드 bit matrix를 만드는 함수
@@ -21,6 +21,5 @@ public abstract class BitMTGenerator {
      * @throws WriterException
      * @throws IOException
      */
-    abstract BitMatrix generate(Information info, int qrWidth, int qrHeight)
-            throws WriterException, IOException;
+    abstract BitMatrix generate(Information info, int qrWidth, int qrHeight)throws WriterException;
 }

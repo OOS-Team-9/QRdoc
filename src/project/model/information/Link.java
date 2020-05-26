@@ -1,6 +1,8 @@
 package project.model.information;
 
-/*링크 정보를 담당하는 클래스*/
+/**
+ * 링크 정보를 담당하는 클래스
+ */
 public class Link extends Information {
 
     /*생성자*/
@@ -39,6 +41,10 @@ public class Link extends Information {
 
     public void setLinkOrder(int linkOrder) {
         super.setOrder(linkOrder);
+    }
+
+    public void print() {
+        super.print();
     }
 
 }
