@@ -20,7 +20,7 @@ public class VisualQRgenerator extends QRgenerator {
         super(outputDirectory);
     }
 
-    VisualQRgenerator(DefaultQRgenerator other){
+    VisualQRgenerator(VisualQRgenerator other){
         super(other);
     }
 
