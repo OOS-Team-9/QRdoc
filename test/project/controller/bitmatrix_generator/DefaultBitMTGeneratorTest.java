@@ -1,0 +1,13 @@
+package project.controller.bitmatrix_generator;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class DefaultBitMTGeneratorTest {
+
+    @Test
+    void generate() {
+
+    }
+}

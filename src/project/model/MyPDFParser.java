@@ -3,7 +3,6 @@ package project.model;
 import org.apache.pdfbox.io.RandomAccessRead;
 import org.apache.pdfbox.io.ScratchFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
-import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.IOException;
 import java.io.InputStream;
