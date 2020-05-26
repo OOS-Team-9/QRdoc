@@ -1,4 +1,4 @@
-package project.model.information;
+package project.model;
 
 public class Page {
     private String text;

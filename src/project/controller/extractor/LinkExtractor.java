@@ -20,8 +20,7 @@ public class LinkExtractor extends Extractor<Link> {
     public LinkExtractor(MyDoc doc) throws IOException {
         super(doc);
         //링크 패턴 설정
-        pattern = Pattern.compile("(((http(s)?:\\\\/\\\\/)\\\\S+(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+)|((http(s)?:\\\\/\\\\/)?\" +\n" +
-                "(([a-zA-z\\\\-_]+[0-9]*)|([0-9]*[a-zA-z\\\\-_]+)){2,}(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+))+");
+        pattern = Pattern.compile("(([^\\\\:/\\\\?#@\\\\s]+):)?((//)?([^/\\\\?#\\\\s]]+))?[^\\\\?#\\\\s]*(\\\\?([^#\\\\s]+))?(#\\\\S+)?");
     }
 
     /**

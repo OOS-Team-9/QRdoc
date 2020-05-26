@@ -3,7 +3,7 @@ package project.controller.extractor;
 import org.apache.pdfbox.text.PDFTextStripper;
 import project.model.MyDoc;
 import project.model.information.Information;
-import project.model.information.Page;
+import project.model.Page;
 
 import java.io.IOException;
 import java.util.ArrayList;
