@@ -3,6 +3,7 @@ package project.controller.extractor;
 import org.apache.pdfbox.text.PDFTextStripper;
 import project.model.MyDoc;
 import project.model.information.Information;
+import project.model.information.Link;
 import project.model.information.Page;
 
 import java.io.IOException;
@@ -20,8 +21,16 @@ abstract public class Extractor<T extends Information> {
     protected ArrayList<Page> pageList; //문서 안 모든 페이지 정보
 
     protected Pattern pattern;           //특정한 패턴
+
     protected ArrayList<ArrayList<T>> infoList;  //문서 안에서 특정한 패턴을 만족하는 모든 문자열 정보
     protected PDFTextStripper stripper;  //문서를 파싱하는 기계
+
+
+
+     //links[0]에는 1쪽의 링크들의 ArrayList가 담김
+
+
+
 
     /**
      * 생성자
@@ -63,7 +72,7 @@ abstract public class Extractor<T extends Information> {
             buffer = stripper.getText(doc);
             //페이지 안 문자열을 페이지 객체에 저장
             pageList.get(i).setText(buffer);
-            System.out.println("page"+i+" text:"+pageList.get(i).getText());
+            System.out.println("page"+i+" text:\n"+pageList.get(i).getText());
         }
     }
 
@@ -71,7 +80,8 @@ abstract public class Extractor<T extends Information> {
      * 문서 안에서 특정 패턴을 만족하는 문자열을 추출하는 함수
      * 실행 순서: 생성자 호출 -> readTexts 호출 -> extract 호출 -> getInfoList 호출
      */
-    public void extract() {
+    abstract public void extract();
+    /* {
         Matcher matcher;
         //페이지 하나씩 확인
         for (int pageOrder = 0; pageOrder < pageNum; pageOrder++) {
@@ -80,10 +90,15 @@ abstract public class Extractor<T extends Information> {
             //특정 패턴을 만족하는 문자열 추출
             matcher = pattern.matcher(pageList.get(pageOrder).getText());
 
-            /*이 문자열을 배열에 저장*/
+            //이 문자열을 배열에 저장
             for (int infoOrder = 0; matcher.find(); infoOrder++) {
                 infoList.get(pageOrder).add((T)(new Information(matcher.group(), matcher.start(), infoOrder)));
             }
         }
     }
+    */
+
+
 }
+
+
