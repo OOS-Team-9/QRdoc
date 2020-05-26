@@ -92,10 +92,10 @@ public class MyDoc extends PDDocument {
         //String[] savedImgList = new String[this.getNumberOfPages()]; //저장된 이미지 경로를 저장하는 List 객체
         BufferedImage[] returnValue = new BufferedImage[this.getPages().getCount()];
 
-            //PDDocument pdfDoc = PDDocument.load(is); //Document 생성
-            PDFRenderer pdfRenderer = new PDFRenderer(this);
+        //PDDocument pdfDoc = PDDocument.load(is); //Document 생성
+        PDFRenderer pdfRenderer = new PDFRenderer(this);
 
-            String resultImgPath = "src/test_image"; //이미지가 저장될 경로
+        String resultImgPath = "src/test_image"; //이미지가 저장될 경로
         try {
             Files.createDirectories(Paths.get(resultImgPath)); //PDF 2 Img에서는 경로가 없는 경우 이미지 파일이 생성이 안되기 때문에 디렉토리를 만들어준다.
 
