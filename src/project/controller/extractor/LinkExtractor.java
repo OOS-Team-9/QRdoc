@@ -27,11 +27,13 @@ public class LinkExtractor extends Extractor<Link> {
 
         sPattern=Pattern.compile("\\s*");
         pattern =Pattern.compile("([^\\:/\\?#@\\s]+://.+)(www\\.\\S+)?|(www\\.\\S+)");
+        //pattern =Pattern.compile("([^\\:/\\?#@\\s]+://.+)(www\\.)?[^(http)(www)\\s]+|www\\.[^(http)(www)\\s]+");
 /*
         pattern = Pattern.compile("(((http(s)?:\\\\/\\\\/)\\\\S+(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+)|((http(s)?:\\\\/\\\\/)?\" +\n" +
                 "(([a-zA-z\\\\-_]+[0-9]*)|([0-9]*[a-zA-z\\\\-_]+)){2,}(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+))+");
 
- */
+*/
+
 }
 
     /**
@@ -45,7 +47,7 @@ public class LinkExtractor extends Extractor<Link> {
     public void extract(){
         for(int i=0;i<pageNum;i++){
             infoList.add(new ArrayList<Link>());
-            Matcher matcher =pattern.matcher(pageList.get(i).getText());
+            Matcher matcher =pattern.matcher(originalPageList.get(i).getText());
             Link tempLk;
             Matcher sMatcher;
             while(matcher.find()) {
@@ -59,3 +61,5 @@ public class LinkExtractor extends Extractor<Link> {
         }
     }
 }
+
+

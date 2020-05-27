@@ -21,7 +21,8 @@ abstract public class Extractor<T extends Information> {
 
     protected MyDoc doc;                //파싱할 문서
     protected int pageNum;              //문서 안 페이지 수
-    protected ArrayList<Page> pageList; //문서 안 모든 페이지 정보
+    protected ArrayList<Page> pageList; //문서 안 모든 페이지 정보(개행문제 삭제됨)
+    protected ArrayList<Page> originalPageList; //문서 안 모든 페이지 정보(개행문자 삭제 안 된 원문)_link추출에서 쓰임
 
     protected Pattern pattern;           //특정한 패턴
 
@@ -37,14 +38,15 @@ abstract public class Extractor<T extends Information> {
 
 
     /**
-     * 생성자
-     * @param doc 파싱할 문서
+     * 생성
      * @throws IOException
      */
+
     public Extractor(MyDoc doc) throws IOException {
         this.doc = doc;
         this.pageNum = doc.getNumberOfPages();
         pageList = new ArrayList<>();
+        originalPageList=new ArrayList<>();
         infoList = new ArrayList<>();
         stripper = new Stripper();
         pattern = Pattern.compile("");
@@ -86,20 +88,22 @@ abstract public class Extractor<T extends Information> {
             listTP.add(tempL);
 
             pageList.add(new Page(i));
+            originalPageList.add(new Page(i));
             buffer = stripper.getText(doc);
             //페이지 안 문자열을 페이지 객체에 저장
+            originalPageList.get(i).setText(buffer);
             pageList.get(i).setText(buffer.replace(System.getProperty("line.separator"), ""));
-            //String temp = pageList.get(i).getText();
-            //System.out.println("page"+i+"length:"+ temp.length()+" text:"+temp);
+            String temp = pageList.get(i).getText();
+            System.out.println("page"+i+"length:"+ temp.length()+" text:"+temp);
         }
-        //System.out.println("TP: "+listTP.get(0).toString());
+        System.out.println("TP size"+listTP.get(0).size()+"TP: "+listTP.get(0).toString());
     }
     public void setPos(){
         String text;
         for(int i=0;i<pageList.size();i++){
             text=pageList.get(i).getText();
-
             for(int j=0;j<infoList.get(i).size();j++){
+                //System.out.println("test"+infoList.get(i).get(j).getText());
                 int infoIndex=text.indexOf(infoList.get(i).get(j).getText())+infoList.get(i).get(j).getText().length()-1;
                 //System.out.println(listTP.get(i).get(infoIndex).toString());
                 infoList.get(i).get(j).setxPos(listTP.get(i).get(infoIndex).getEndX());
@@ -108,16 +112,16 @@ abstract public class Extractor<T extends Information> {
             }
         }
 
+        /*
         for(int i=0;i<pageList.size();i++) {
             for (int j = 0; j < infoList.get(i).size(); j++) {
-                //System.out.println("text" + infoList.get(i).get(j).getText());
-                //System.out.println("xPos: " + infoList.get(i).get(j).getxPos());
-                //System.out.println("yPos: " + infoList.get(i).get(j).getyPos());
-                //System.out.println("fontSize: " + infoList.get(i).get(j).getFontSize());
+                System.out.println("text: " + infoList.get(i).get(j).getText());
+                System.out.println("xPos: " + infoList.get(i).get(j).getxPos());
+                System.out.println("yPos: " + infoList.get(i).get(j).getyPos());
+                System.out.println("fontSize: " + infoList.get(i).get(j).getFontSize());
             }
         }
-
-
+        */
     }
 
 
