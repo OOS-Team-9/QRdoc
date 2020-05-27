@@ -83,14 +83,9 @@ public class MyDoc extends PDDocument {
         //PDDocument pdfDoc = PDDocument.load(is); //Document 생성
         PDFRenderer pdfRenderer = new PDFRenderer(this);
 
-        String resultImgPath = "src/test_image"; //이미지가 저장될 경로
         try {
-            Files.createDirectories(Paths.get(resultImgPath)); //PDF 2 Img에서는 경로가 없는 경우 이미지 파일이 생성이 안되기 때문에 디렉토리를 만들어준다.
-
-
         //순회하며 이미지로 변환 처리
             for (int i=0; i<this.getPages().getCount(); i++) {
-                String imgFileName = resultImgPath + "/" + i + ".jpg";
                 //DPI 설정
                 returnValue[i] = pdfRenderer.renderImageWithDPI(i, 300, ImageType.RGB);
                 // 이미지로 만든다.
