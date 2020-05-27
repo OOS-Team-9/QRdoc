@@ -2,6 +2,10 @@ package project.model;
 
 import java.util.ArrayList;
 
+/**
+ * QR-code 정보를 다 모아놓은 데이터베이스 클래스
+ * (나중에 사용할 예정)
+ */
 public class QRcodeDatabase {
     public ArrayList<QRcode> qrList;
 
@@ -9,32 +13,43 @@ public class QRcodeDatabase {
         qrList = new ArrayList<>();
     }
 
-    void addQRcode(QRcode qr) {
+    public int getSize() {
+        return qrList.size();
+    }
+
+    public QRcode getQRcode(int index) {
+        return qrList.get(index);
+    }
+
+    public void addQRcode(QRcode qr) {
         qrList.add(qr);
     }
 
-    void addQRcode(QRcode qr, int index){
-        qrList.add(index,qr);
+    public void addQRcode(QRcode qr, int index) {
+        qrList.add(index, qr);
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return qrList.isEmpty();
     }
 
-    int searchQRcode(QRcode qr) {
+    public int searchQRcode(QRcode target) {
+        QRcode orignal=null;
         for (int i = 0; i < qrList.size(); i++) {
-            if(qrList.get(i).getOrder()==qr.getOrder()){
+            orignal=qrList.get(i);
+            if (orignal.getPageOrder() == target.getPageOrder()&&
+                    orignal.getInfoOrderInOnePage()==target.getInfoOrderInOnePage()) {
                 return i;
             }
         }
         return -1;
     }
 
-    void deleteQRcode(int index) {
+    public void deleteQRcode(int index) {
         qrList.remove(index);
     }
 
-    ArrayList<QRcode> getQRList(){
+    public ArrayList<QRcode> getQRList() {
         return qrList;
     }
 }

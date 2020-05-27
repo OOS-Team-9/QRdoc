@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * 문자열을 Visual QR-code로 변환하여 이를 이미지 파일로 저장하는 클래스
  */
-public class VisualBitMTGenerator extends BitMTGenerator {
+public class VisualBitMTgenerator extends BitMTgenerator {
 
     /**
      * 문자열 정보를 입력 받아, QR코드 이미지 파일을 만들고
@@ -25,7 +25,7 @@ public class VisualBitMTGenerator extends BitMTGenerator {
      * @throws IOException
      */
     @Override
-    BitMatrix generate(Information info, int qrWidth, int qrHeight) throws WriterException, IOException {
+    BitMatrix generate(Information info, int qrWidth, int qrHeight) throws WriterException, WriterException {
         assert (qrWidth > 0 && qrHeight > 0);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         return qrCodeWriter.encode (info.getText(), BarcodeFormat.QR_CODE, qrWidth, qrHeight);

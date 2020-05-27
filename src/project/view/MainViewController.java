@@ -17,7 +17,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import project.Main;
 import project.controller.FileStream;
-import project.controller.extractor.LinkExtractor;
 import project.model.MyDoc;
 import project.model.information.Link;
 
@@ -105,6 +104,7 @@ public class MainViewController implements Initializable {
 			}
 		});
 		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
+
 			try {
 				LinkExtractor linkExtractor=new LinkExtractor(myDoc);
 				linkExtractor.readTexts();
