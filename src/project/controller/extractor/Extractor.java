@@ -88,9 +88,9 @@ abstract public class Extractor<T extends Information> {
             pageList.add(new Page(i));
             buffer = stripper.getText(doc);
             //페이지 안 문자열을 페이지 객체에 저장
-            pageList.get(i).setText(buffer.replace(System.getProperty("line.separator"), ""));
-            //String temp = pageList.get(i).getText();
-            //System.out.println("page"+i+"length:"+ temp.length()+" text:"+temp);
+            pageList.get(i).setText(buffer.replace(System.getProperty("line.separator"), " "));
+            String temp = pageList.get(i).getText();
+            System.out.println("page"+i+"length:"+ temp.length()+" text:"+temp);
         }
         //System.out.println("TP: "+listTP.get(0).toString());
     }
@@ -100,6 +100,7 @@ abstract public class Extractor<T extends Information> {
             text=pageList.get(i).getText();
 
             for(int j=0;j<infoList.get(i).size();j++){
+                //System.out.println("test"+infoList.get(i).get(j).getText());
                 int infoIndex=text.indexOf(infoList.get(i).get(j).getText())+infoList.get(i).get(j).getText().length()-1;
                 //System.out.println(listTP.get(i).get(infoIndex).toString());
                 infoList.get(i).get(j).setxPos(listTP.get(i).get(infoIndex).getEndX());
@@ -110,10 +111,10 @@ abstract public class Extractor<T extends Information> {
 
         for(int i=0;i<pageList.size();i++) {
             for (int j = 0; j < infoList.get(i).size(); j++) {
-                //System.out.println("text" + infoList.get(i).get(j).getText());
-                //System.out.println("xPos: " + infoList.get(i).get(j).getxPos());
-                //System.out.println("yPos: " + infoList.get(i).get(j).getyPos());
-                //System.out.println("fontSize: " + infoList.get(i).get(j).getFontSize());
+                System.out.println("text" + infoList.get(i).get(j).getText());
+                System.out.println("xPos: " + infoList.get(i).get(j).getxPos());
+                System.out.println("yPos: " + infoList.get(i).get(j).getyPos());
+                System.out.println("fontSize: " + infoList.get(i).get(j).getFontSize());
             }
         }
 
