@@ -98,7 +98,6 @@ abstract public class Extractor<T extends Information> {
         String text;
         for(int i=0;i<pageList.size();i++){
             text=pageList.get(i).getText();
-
             for(int j=0;j<infoList.get(i).size();j++){
                 int infoIndex=text.indexOf(infoList.get(i).get(j).getText())+infoList.get(i).get(j).getText().length()-1;
                 //System.out.println(listTP.get(i).get(infoIndex).toString());
@@ -107,17 +106,6 @@ abstract public class Extractor<T extends Information> {
                 infoList.get(i).get(j).setFontSize(listTP.get(i).get(infoIndex).getFontSize());
             }
         }
-
-        for(int i=0;i<pageList.size();i++) {
-            for (int j = 0; j < infoList.get(i).size(); j++) {
-                //System.out.println("text" + infoList.get(i).get(j).getText());
-                //System.out.println("xPos: " + infoList.get(i).get(j).getxPos());
-                //System.out.println("yPos: " + infoList.get(i).get(j).getyPos());
-                //System.out.println("fontSize: " + infoList.get(i).get(j).getFontSize());
-            }
-        }
-
-
     }
 
 
