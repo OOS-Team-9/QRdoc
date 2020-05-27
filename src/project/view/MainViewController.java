@@ -105,7 +105,7 @@ public class MainViewController implements Initializable {
 					File newFile = new File(file.getAbsolutePath()+".pdf");
 					file = newFile;
 				}
-				if(!myDocStream.saveDoc(file).equals("(요청한 작업은, 사용자가 매핑한 구역이 열려 있는 상태인 파일에서 수행할 수 없습니다)")){
+				if(myDocStream.saveDoc(file).contains("(요청한 작업은, 사용자가 매핑한 구역이 열려 있는 상태인 파일에서 수행할 수 없습니다)")){
 					showFileAlreadyOpenAlertDialog();
 				}
 				else{
