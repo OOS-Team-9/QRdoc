@@ -18,11 +18,13 @@ import javafx.stage.Stage;
 import project.Main;
 import project.controller.FileStream;
 import project.model.MyDoc;
+import project.model.information.Link;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -102,14 +104,22 @@ public class MainViewController implements Initializable {
 			}
 		});
 		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
-			//try {
-				//LinkExtractor linkExtractor=new LinkExtractor(myDoc);
-				//linkExtractor.readTexts();
-				//linkExtractor.extract();
-				
-			//} catch (IOException e) {
-			//	e.printStackTrace();
-			//}
+
+			try {
+				LinkExtractor linkExtractor=new LinkExtractor(myDoc);
+				linkExtractor.readTexts();
+				linkExtractor.extract();
+				linkExtractor.setPos();
+				ArrayList<ArrayList<Link>> infoList = linkExtractor.getInfoList();
+				for (int j = 0; j < infoList.get(0).size(); j++) {
+					System.out.println("text" + infoList.get(0).get(j).getText());
+					System.out.println("xPos: " + infoList.get(0).get(j).getxPos());
+					System.out.println("yPos: " + infoList.get(0).get(j).getyPos());
+					System.out.println("fontSize: " + infoList.get(0).get(j).getFontSize());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 			makeTempPDF();
 			showTempPDF();
@@ -152,7 +162,6 @@ public class MainViewController implements Initializable {
 	}
 
 	void makeTempPDF(){
-		System.out.println(myDoc.getNumberOfPages());
 		BufferedImage[] temp = myDoc.conversionPdf2Img();
 		image = new Image[temp.length];
 		for(int i = 0; i < temp.length; i++){

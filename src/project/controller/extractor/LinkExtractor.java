@@ -21,8 +21,18 @@ public class LinkExtractor extends Extractor {
     public LinkExtractor(MyPath docFile) throws IOException {
         super(docFile);
         //링크 패턴 설정
-        pattern = Pattern.compile("(((http(s?))\\:\\/\\/)?)([0-9a-zA-Z\\-]+\\.)+[a-zA-Z]{2,6}(\\:[0-9]+)?(\\/\\S*)?");
-    }
+
+        sPattern=Pattern.compile("\\s*");
+        pattern =Pattern.compile("([^\\:/\\?#@\\s]+://.+)(www\\.\\S+)?|(www\\.\\S+)");
+        //pattern =Pattern.compile("([^\\:/\\?#@\\s]+://.+)(www\\.)?[^(http)(www)\\s]+|www\\.[^(http)(www)\\s]+");
+/*
+        pattern = Pattern.compile("(((http(s)?:\\\\/\\\\/)\\\\S+(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+)|((http(s)?:\\\\/\\\\/)?\" +\n" +
+                "(([a-zA-z\\\\-_]+[0-9]*)|([0-9]*[a-zA-z\\\\-_]+)){2,}(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+))+");
+
+*/
+
+}
+
 
     /**
      * 링크 리스트를 리턴하는 함수
@@ -31,4 +41,23 @@ public class LinkExtractor extends Extractor {
     public ArrayList<ArrayList<Information>> getLinkList() {
         return super.getInfoList();
     }
+
+    public void extract(){
+        for(int i=0;i<pageNum;i++){
+            infoList.add(new ArrayList<Link>());
+            Matcher matcher =pattern.matcher(originalPageList.get(i).getText());
+            Link tempLk;
+            Matcher sMatcher;
+            while(matcher.find()) {
+                tempLk=new Link(matcher.group(),i,i);
+                sMatcher=sPattern.matcher(tempLk.getLink());
+                if(sMatcher.matches())
+                    continue;
+                //System.out.println("test:"+tempLk.getLink());
+                infoList.get(i).add(new Link(tempLk.getLink(),i,i));
+            }
+        }
+    }
 }
+
+
