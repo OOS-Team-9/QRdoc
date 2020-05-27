@@ -38,8 +38,7 @@ abstract public class Extractor<T extends Information> {
 
 
     /**
-     * 생성자
-     * @param doc 파싱할 문서
+     * 생성
      * @throws IOException
      */
     public Extractor(MyDoc doc) throws IOException {
