@@ -26,7 +26,7 @@ public class LinkExtractor extends Extractor<Link> {
         //링크 패턴 설정
 
         sPattern=Pattern.compile("\\s*");
-        pattern =Pattern.compile("([^\\:/\\?#@\\s]+://.+)(www\\..+)?|(www\\..+)");
+        pattern =Pattern.compile("([^\\:/\\?#@\\s]+://.+)(www\\.\\S+)?|(www\\.\\S+)");
 /*
         pattern = Pattern.compile("(((http(s)?:\\\\/\\\\/)\\\\S+(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+)|((http(s)?:\\\\/\\\\/)?\" +\n" +
                 "(([a-zA-z\\\\-_]+[0-9]*)|([0-9]*[a-zA-z\\\\-_]+)){2,}(\\\\.[^(\\\\n|\\\\t|\\\\s,)]+)+))+");
@@ -53,7 +53,7 @@ public class LinkExtractor extends Extractor<Link> {
                 sMatcher=sPattern.matcher(tempLk.getLink());
                 if(sMatcher.matches())
                     continue;
-                System.out.println("test:"+tempLk.getLink());
+                //System.out.println("test:"+tempLk.getLink());
                 infoList.get(i).add(new Link(tempLk.getLink(),i,i));
             }
         }
