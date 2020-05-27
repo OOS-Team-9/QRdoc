@@ -1,13 +1,16 @@
 package project.controller.extractor;
 
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.TextPosition;
 import project.model.MyDoc;
 import project.model.information.Information;
 import project.model.Page;
 
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +26,8 @@ abstract public class Extractor<T extends Information> {
     protected Pattern pattern;           //특정한 패턴
 
     protected ArrayList<ArrayList<T>> infoList;  //문서 안에서 특정한 패턴을 만족하는 모든 문자열 정보
-    protected PDFTextStripper stripper;  //문서를 파싱하는 기계
+    protected Stripper stripper;  //문서를 파싱하는 기계
+    ArrayList<List<TextPosition>> listTP = new ArrayList<>();    //TextPostion저장 리스트
 
 
 
@@ -42,7 +46,7 @@ abstract public class Extractor<T extends Information> {
         this.pageNum = doc.getNumberOfPages();
         pageList = new ArrayList<>();
         infoList = new ArrayList<>();
-        stripper = new PDFTextStripper();
+        stripper = new Stripper();
         pattern = Pattern.compile("");
     }
 
@@ -59,22 +63,63 @@ abstract public class Extractor<T extends Information> {
      * @throws IOException
      */
     public void readTexts() throws IOException {
+
         String buffer = new String();
+        stripper.setSortByPosition(true);
+        stripper.setStartPage(1);
+        stripper.setEndPage(pageNum);
+
+
+
 
         //페이지 하나씩 확인
         for (int i = 0; i < pageNum; i++) {
-            System.out.println("i: "+i);
+            //System.out.println("i: "+i);
             //범위를 페이지 하나로 한정 지음
+            stripper.setSortByPosition(true);
             stripper.setStartPage(i + 1);
             stripper.setEndPage(i + 1);
+            StringWriter outString = new StringWriter();
+            stripper.writeText(doc, outString);
+            List<TextPosition> tempL = stripper.getCharactersByArticle().get(0);
+            //System.out.println("temp size:" + tempL.size() + "temp:" + tempL.toString());
+            listTP.add(tempL);
 
             pageList.add(new Page(i));
             buffer = stripper.getText(doc);
             //페이지 안 문자열을 페이지 객체에 저장
-            pageList.get(i).setText(buffer);
-            System.out.println("page"+i+" text:\n"+pageList.get(i).getText());
+            pageList.get(i).setText(buffer.replace(System.getProperty("line.separator"), ""));
+            //String temp = pageList.get(i).getText();
+            //System.out.println("page"+i+"length:"+ temp.length()+" text:"+temp);
         }
+        //System.out.println("TP: "+listTP.get(0).toString());
     }
+    public void setPos(){
+        String text;
+        for(int i=0;i<pageList.size();i++){
+            text=pageList.get(i).getText();
+
+            for(int j=0;j<infoList.get(i).size();j++){
+                int infoIndex=text.indexOf(infoList.get(i).get(j).getText())+infoList.get(i).get(j).getText().length()-1;
+                //System.out.println(listTP.get(i).get(infoIndex).toString());
+                infoList.get(i).get(j).setxPos(listTP.get(i).get(infoIndex).getEndX());
+                infoList.get(i).get(j).setyPos(listTP.get(i).get(infoIndex).getEndY());
+                infoList.get(i).get(j).setFontSize(listTP.get(i).get(infoIndex).getFontSize());
+            }
+        }
+
+        for(int i=0;i<pageList.size();i++) {
+            for (int j = 0; j < infoList.get(i).size(); j++) {
+                //System.out.println("text" + infoList.get(i).get(j).getText());
+                //System.out.println("xPos: " + infoList.get(i).get(j).getxPos());
+                //System.out.println("yPos: " + infoList.get(i).get(j).getyPos());
+                //System.out.println("fontSize: " + infoList.get(i).get(j).getFontSize());
+            }
+        }
+
+
+    }
+
 
     /**
      * 문서 안에서 특정 패턴을 만족하는 문자열을 추출하는 함수

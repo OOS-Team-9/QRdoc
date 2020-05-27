@@ -107,6 +107,7 @@ public class MainViewController implements Initializable {
 				LinkExtractor linkExtractor=new LinkExtractor(myDoc);
 				linkExtractor.readTexts();
 				linkExtractor.extract();
+				linkExtractor.setPos();
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -153,7 +154,6 @@ public class MainViewController implements Initializable {
 	}
 
 	void makeTempPDF(){
-		System.out.println(myDoc.getNumberOfPages());
 		BufferedImage[] temp = myDoc.conversionPdf2Img();
 		image = new Image[temp.length];
 		for(int i = 0; i < temp.length; i++){
