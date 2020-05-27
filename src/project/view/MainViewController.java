@@ -22,6 +22,7 @@ import project.controller.FileStream;
 import project.controller.bitmatrix_generator.DefaultBitMTgenerator;
 import project.controller.extractor.LinkExtractor;
 import project.controller.qr_inserter.EndNoteQRinserter;
+import project.controller.qr_inserter.IndicesInserter;
 import project.controller.qrcode_writer.QRcodeWriter;
 import project.model.MyDoc;
 import project.model.QRcode;
@@ -104,8 +105,13 @@ public class MainViewController implements Initializable {
 					File newFile = new File(file.getAbsolutePath()+".pdf");
 					file = newFile;
 				}
-				myDocStream.saveDoc(file);
-				System.out.println("saved"+ file.getAbsolutePath());
+				if(!myDocStream.saveDoc(file).equals("(요청한 작업은, 사용자가 매핑한 구역이 열려 있는 상태인 파일에서 수행할 수 없습니다)")){
+					showFileAlreadyOpenAlertDialog();
+				}
+				else{
+					System.out.println("saved"+ file.getAbsolutePath());
+				}
+
 			}
 			else{
 				showSelectSaveDialog(myDocStream);
@@ -173,13 +179,8 @@ public class MainViewController implements Initializable {
 					System.out.println(e.getMessage());
 				}
 
+				IndicesInserter.addIndices(myDoc,linkList);
 
-				for (int j = 0; j < linkList.get(0).size(); j++) {
-					System.out.println("text" + linkList.get(0).get(j).getText());
-					System.out.println("xPos: " + linkList.get(0).get(j).getxPos());
-					System.out.println("yPos: " + linkList.get(0).get(j).getyPos());
-					System.out.println("fontSize: " + linkList.get(0).get(j).getFontSize());
-				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -259,6 +260,27 @@ public class MainViewController implements Initializable {
 			loader.setLocation(Main.class.getResource("view/showFileInputAlert_view.fxml"));
 			AnchorPane page = (AnchorPane)loader.load();
 			showFileInputAlertController controller = loader.getController();
+			Stage selectSaveStage = new Stage();
+			Scene scene = new Scene(page);
+			selectSaveStage.setTitle("Alert");
+			selectSaveStage.initModality(Modality.WINDOW_MODAL);
+			selectSaveStage.initOwner(primaryStage);
+			selectSaveStage.setScene(scene);
+			controller.setDialogStage(selectSaveStage);
+			selectSaveStage.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+	public void showFileAlreadyOpenAlertDialog(){
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("view/showFileAlreadyOpenAlert_view.fxml"));
+			AnchorPane page = (AnchorPane)loader.load();
+			showFileAlreadyOpenAlertController controller = loader.getController();
 			Stage selectSaveStage = new Stage();
 			Scene scene = new Scene(page);
 			selectSaveStage.setTitle("Alert");

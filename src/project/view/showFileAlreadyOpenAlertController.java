@@ -10,7 +10,7 @@ import project.controller.FileStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class showFileInputAlertController implements Initializable {
+public class showFileAlreadyOpenAlertController implements Initializable {
     Stage selectSaveStage;
 
     @FXML
@@ -18,7 +18,7 @@ public class showFileInputAlertController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       cancleButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
+        cancleButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
             closeStage();
         });
     }

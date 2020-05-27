@@ -44,18 +44,20 @@ public class LinkExtractor extends Extractor<Link> {
     }
 
     public void extract(){
+        int orderCount = 1;
         for(int i=0;i<pageNum;i++){
             infoList.add(new ArrayList<Link>());
             Matcher matcher =pattern.matcher(originalPageList.get(i).getText());
             Link tempLk;
             Matcher sMatcher;
             while(matcher.find()) {
-                tempLk=new Link(matcher.group(),i,i);
+                tempLk=new Link(matcher.group(),orderCount,orderCount);
                 sMatcher=sPattern.matcher(tempLk.getLink());
                 if(sMatcher.matches())
                     continue;
+                orderCount++;
                 //System.out.println("test:"+tempLk.getLink());
-                infoList.get(i).add(new Link(tempLk.getLink(),i,i));
+                infoList.get(i).add(tempLk);
             }
         }
     }

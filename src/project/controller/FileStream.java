@@ -48,13 +48,13 @@ public class FileStream {
 
     }
 
-    public boolean saveDoc(File saveFile) {
+    public String saveDoc(File saveFile) {
         try {
             doc.save(saveFile);
-            return true;
+            return "true";
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return e.getMessage();
         }
     }
 
