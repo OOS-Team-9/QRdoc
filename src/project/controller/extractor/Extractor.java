@@ -41,6 +41,7 @@ abstract public class Extractor<T extends Information> {
      * 생성
      * @throws IOException
      */
+
     public Extractor(MyDoc doc) throws IOException {
         this.doc = doc;
         this.pageNum = doc.getNumberOfPages();
