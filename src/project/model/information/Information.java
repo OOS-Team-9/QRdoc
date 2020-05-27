@@ -6,6 +6,9 @@ public class Information {
     private String text;        //문자열.
     private int textPos;        //문자열의 위치.
     private int order;          //문자열의 순서값.
+    private float xPos;
+    private float yPos;
+    private float fontSize;
 
     /*생성자*/
     public Information(String text, int textPos, int order) {
@@ -45,6 +48,25 @@ public class Information {
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    public float getxPos(){
+        return xPos;
+    }
+    public void setxPos(float pos){
+        this.xPos=pos;
+    }
+    public float getyPos(){
+        return yPos;
+    }
+    public void setyPos(float pos){
+        this.yPos=pos;
+    }
+    public float getFontSize(){
+        return fontSize;
+    }
+    public void setFontSize(float size){
+        fontSize=size;
     }
 
 }
