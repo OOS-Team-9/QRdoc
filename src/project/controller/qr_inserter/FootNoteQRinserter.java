@@ -1,8 +1,10 @@
 package project.controller.qr_inserter;
 
-import project.model.MyPath;
+import project.controller.FileStream;
+import project.model.MyDoc;
 import project.model.QRcode;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,7 +13,6 @@ import java.util.ArrayList;
  */
 public class FootNoteQRinserter extends QRinserter{
     @Override
-    public void insert(MyPath docPath, ArrayList<ArrayList<QRcode>> qrCodeList) throws IOException {
+    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc) throws IOException {}
 
-    }
 }

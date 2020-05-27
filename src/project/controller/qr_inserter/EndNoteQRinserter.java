@@ -4,11 +4,14 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import project.model.MyPath;
+import project.controller.FileStream;
+import project.model.MyDoc;
 import project.model.QRcode;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,26 +24,23 @@ public class EndNoteQRinserter extends QRinserter{
     /**
      * PDF 파일에 QR-code를 삽입한 다음,
      * "[원래 문서 이름]~QR.pdf" 이름으로 저장하는 함수
-     * @param docPath   기존 PDF 파일
      * @param qrCodeList PDF파일에 삽입할 QR-code 모음
      * @throws IOException
      */
-    public void insert(MyPath docPath, ArrayList<ArrayList<QRcode>> qrCodeList) throws IOException {
+    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc) throws IOException {
         //변수 선언 및 정의
         int i = 1, j, k = 1, l = 0, m = 0;          // i=QRcode파일 카운터,j=i%4,k=i/4
         int total = 0, tempTotal = 0, pageNum = 0;  // total=파일 수, pageNum=추가될 페이지수
         String s, t;
+
+        BufferedImage tempImage;
         String text = "";
         Image image = null;
         int pageOffset=0;
 
         //문서 열기
-        PDDocument doc = null;
-        try {
-            doc = PDDocument.load(new File(docPath.getPathString()));
-        } catch (IOException e) {
-            throw new IOException("EndNoteQRinserter::insert ERROR: [ " + docPath.getPathString() + " ]을 열 수 없습니다.");
-        }
+        MyDoc doc = null;
+        doc = myDoc;
 
         //QR코드 전체 개수 구하기
         ArrayList<QRcode> qrCodeListOneLine=new ArrayList<>();
@@ -105,8 +105,8 @@ public class EndNoteQRinserter extends QRinserter{
                         j = tempTotal - i + 1;
                     }
                     while (l < j) {
-                        s = qrCodeListOneLine.get(l).getPath().getPathString();
-                        pdImage = PDImageXObject.createFromFile(s, doc);// Creating PDImageXObject object
+                        tempImage = qrCodeListOneLine.get(l).getImage();
+                        pdImage =  LosslessFactory.createFromImage(doc,tempImage);// Creating PDImageXObject object
                         contents.drawImage(pdImage, 140 * (l) + 48, ((((tempTotal - 1) % 20) / 4) + 1 - m) * 150 - 90);
                         i++;
                         l++;
@@ -118,20 +118,9 @@ public class EndNoteQRinserter extends QRinserter{
                 System.out.println("Image inserted");
                 contents.close();
             } catch (IOException e) {
-                throw new IOException("EndNoteQRinserter::insert ERROR: [ " + docPath.getPathString() + " ]에 QR 코드를 삽입할 수 없습니다.");
+                throw new IOException("EndNoteQRinserter::insert ERROR: QR 코드를 삽입할 수 없습니다.");
             }
             pageNum--;
-        }
-        try {
-            doc.save(docPath.getDirectory()+"\\"+docPath.getFileName().replace(".pdf","")+"~QR.pdf");
-        } catch (IOException e) {
-            throw new IOException("EndNoteQRinserter::insert ERROR: [ " + docPath.getPathString() + " ]를 저장할 수 없습니다.");
-        }
-
-        try {
-            doc.close();
-        } catch (IOException e) {
-            throw new IOException("EndNoteQRinserter::insert ERROR: [ " + docPath.getPathString() + " ]를 닫을 수 없습니다.");
         }
 
     }

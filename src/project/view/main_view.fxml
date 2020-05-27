@@ -40,7 +40,7 @@
             <Button fx:id="btnOpen" mnemonicParsing="false" prefHeight="22.0" prefWidth="119.0" text="문서 불러오기" />
             <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="22.0" prefWidth="89.0" text="저장" />
             <Button fx:id="btnConversion" mnemonicParsing="false" prefHeight="22.0" prefWidth="83.0" text="변환" />
-            <Label fx:id="labelDoc" prefHeight="48.0" prefWidth="309.0" text="Label" />
+            <Label fx:id="labelDoc" prefHeight="48.0" prefWidth="309.0" text="" />
          </children>
       </HBox>
    </children>

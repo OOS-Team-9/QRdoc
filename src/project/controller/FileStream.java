@@ -99,5 +99,7 @@ public class FileStream {
         return fileAddress;
     }
 
+    public MyDoc getMyDoc(){return doc;}
+
 
 }

@@ -1,5 +1,7 @@
 package project.view;
 
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +19,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import project.Main;
 import project.controller.FileStream;
+import project.controller.bitmatrix_generator.DefaultBitMTgenerator;
+import project.controller.extractor.LinkExtractor;
+import project.controller.qr_inserter.EndNoteQRinserter;
+import project.controller.qrcode_writer.QRcodeWriter;
 import project.model.MyDoc;
+import project.model.QRcode;
 import project.model.information.Link;
 
 import java.awt.image.BufferedImage;
@@ -34,6 +41,7 @@ public class MainViewController implements Initializable {
 
 	MyDoc myDoc;
 	FileStream myDocStream;
+	ArrayList<ArrayList<QRcode>> qrCodeObjList = new ArrayList<>();
 	
 	@FXML
 	private Button btnOpen;
@@ -104,18 +112,73 @@ public class MainViewController implements Initializable {
 			}
 		});
 		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
-
 			try {
 				LinkExtractor linkExtractor=new LinkExtractor(myDoc);
 				linkExtractor.readTexts();
 				linkExtractor.extract();
 				linkExtractor.setPos();
-				ArrayList<ArrayList<Link>> infoList = linkExtractor.getInfoList();
-				for (int j = 0; j < infoList.get(0).size(); j++) {
-					System.out.println("text" + infoList.get(0).get(j).getText());
-					System.out.println("xPos: " + infoList.get(0).get(j).getxPos());
-					System.out.println("yPos: " + infoList.get(0).get(j).getyPos());
-					System.out.println("fontSize: " + infoList.get(0).get(j).getFontSize());
+				ArrayList<ArrayList<Link>> linkList = linkExtractor.getInfoList();
+
+				//
+				//  Default Bit Generator 작동!
+				//
+				DefaultBitMTgenerator bitMTgenerator = new DefaultBitMTgenerator();
+				ArrayList<ArrayList<BitMatrix>> bitMatrixList = new ArrayList<>();
+				BitMatrix bitmatrix = null;
+				for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
+					bitMatrixList.add(new ArrayList<BitMatrix>());
+					for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder).size(); infoOrderPerOnePage++) {
+						try {
+							bitmatrix = bitMTgenerator.generate(linkList.get(pageOrder).get(infoOrderPerOnePage), 100, 100);
+							bitMatrixList.get(pageOrder).add(bitmatrix);
+						} catch (WriterException e) {
+							System.out.println("BitMTgenerator::generate ERROR: " +
+									"[ " + linkList.get(pageOrder).get(infoOrderPerOnePage).getText() + " ]을 bit matrix로 변환할 수 없습니다.");
+						}
+					}
+				}
+
+				//
+				//  QR-code 객체 리스트 생성!!
+				//
+
+				QRcode qrCodeObj = null;
+				for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
+					qrCodeObjList.add(new ArrayList<>());
+					for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder).size(); infoOrderPerOnePage++) {
+							qrCodeObj = new QRcode(
+									pageOrder,
+									infoOrderPerOnePage,
+									bitMatrixList.get(pageOrder).get(infoOrderPerOnePage));
+							qrCodeObjList.get(pageOrder).add(qrCodeObj);
+							qrCodeObj.print();
+					}
+				}
+
+				QRcodeWriter qrCodeWriter = new QRcodeWriter();
+				for (ArrayList<QRcode> qrCodeObjListPerPage : qrCodeObjList) {
+					for (QRcode obj : qrCodeObjListPerPage) {
+						try {
+							qrCodeWriter.writeQRcode(obj);
+						} catch (IOException e) {
+							System.out.println(e.getMessage());
+						}
+					}
+				}
+
+				EndNoteQRinserter qrInserter = new EndNoteQRinserter();
+				try {
+					qrInserter.insert(qrCodeObjList,myDoc);
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				}
+
+
+				for (int j = 0; j < linkList.get(0).size(); j++) {
+					System.out.println("text" + linkList.get(0).get(j).getText());
+					System.out.println("xPos: " + linkList.get(0).get(j).getxPos());
+					System.out.println("yPos: " + linkList.get(0).get(j).getyPos());
+					System.out.println("fontSize: " + linkList.get(0).get(j).getFontSize());
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -6,7 +6,6 @@ import project.controller.bitmatrix_generator.DefaultBitMTgenerator;
 import project.controller.extractor.LinkExtractor;
 import project.controller.qr_inserter.EndNoteQRinserter;
 import project.controller.qrcode_writer.QRcodeWriter;
-import project.model.MyPath;
 import project.model.QRcode;
 import project.model.information.Information;
 
@@ -15,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Testmain {
+    /*
     public static void main(String[] args) {
         //경로 설정
         MyPath docFile = null;
@@ -107,5 +107,7 @@ public class Testmain {
         }
 
     }
+
+     */
 }
 
