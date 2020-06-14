@@ -35,7 +35,7 @@ public class LinkExtractor extends Extractor<Link> {
  */
 }
 
-    /**
+    /**pattern =Pattern.compile("([^\\:/\\?#@\\s]+://.+)(www\\.)?[^(http)(www)\\s]+|www\\.[^(http)(www)\\s]+");
      * 링크 리스트를 리턴하는 함수
      * @return 문서 안에서 추출한 링크 리스트
      */

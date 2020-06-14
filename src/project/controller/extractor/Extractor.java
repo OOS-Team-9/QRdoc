@@ -98,12 +98,14 @@ abstract public class Extractor<T extends Information> {
         }
         System.out.println("TP size"+listTP.get(0).size()+"TP: "+listTP.get(0).toString());
     }
+    //
     public void setPos(){
         String text;
         for(int i=0;i<pageList.size();i++){
             text=pageList.get(i).getText();
 
             for(int j=0;j<infoList.get(i).size();j++){
+                //i번째 페이지의 j번째 info의 위치 정보와 폰트 사이즈 저장
                 //System.out.println("test"+infoList.get(i).get(j).getText());
                 int infoIndex=text.indexOf(infoList.get(i).get(j).getText())+infoList.get(i).get(j).getText().length()-1;
                 //System.out.println(listTP.get(i).get(infoIndex).toString());
@@ -112,7 +114,7 @@ abstract public class Extractor<T extends Information> {
                 infoList.get(i).get(j).setFontSize(listTP.get(i).get(infoIndex).getFontSize());
             }
         }
-
+        //테스트용 출력
         for(int i=0;i<pageList.size();i++) {
             for (int j = 0; j < infoList.get(i).size(); j++) {
                 System.out.println("text: " + infoList.get(i).get(j).getText());
