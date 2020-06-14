@@ -1,174 +1,288 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>JAVA</ID>
-  <OriginalElement>project</OriginalElement>
+  <OriginalElement>project.Testmain</OriginalElement>
   <nodes>
-    <node x="0.0" y="470.0">project.controller.FileStream</node>
-    <node x="1269.6466836734694" y="561.5">project.controller.qr_generator.VisualQRgenerator</node>
-    <node x="789.6466836734694" y="560.5">project.controller.qr_generator.DefaultQRgenerator</node>
-    <node x="698.7144274376418" y="116.5">project.model.information.Information</node>
-    <node x="457.54166666666674" y="106.5">project.model.information.Page</node>
-    <node x="424.04166666666674" y="560.5">project.controller.extractor.LinkExtractor</node>
-    <node x="792.9940476190477" y="333.0">project.model.exception</node>
-    <node x="136.04166666666674" y="0.0">project.model.MyPDFParser</node>
-    <node x="1138.0513038548754" y="332.0">project.controller.qr_generator.QRgenerator</node>
-    <node x="1085.6466836734694" y="537.5">project.Main</node>
-    <node x="431.04166666666674" y="299.0">project.controller.extractor.Extractor</node>
-    <node x="307.3125000000001" y="776.0">project.view</node>
-    <node x="668.9940476190477" y="309.0">project.model.information.Link</node>
-    <node x="4.5416666666667425" y="105.0">project.model.MyDoc</node>
-    <node x="0.0" y="900.0">project.controller.qr_inserter</node>
+    <node x="783.4730934278904" y="373.5">project.model.Page</node>
+    <node x="56.8125" y="1442.0">project.controller.FileStream</node>
+    <node x="503.10383124627333" y="373.5">project.model.information.Information</node>
+    <node x="283.0" y="919.0">project.controller.bitmatrix_generator.VisualBitMTgenerator</node>
+    <node x="1171.4163312462733" y="722.5">project.controller.qr_inserter.QRinserter</node>
+    <node x="640.4730934278904" y="918.0">project.controller.extractor.LinkExtractor</node>
+    <node x="121.60416666666667" y="1163.0">project.model.MyPDFParser</node>
+    <node x="186.125" y="723.5">project.controller.bitmatrix_generator.BitMTgenerator</node>
+    <node x="984.2496645796066" y="0.0">project.model.MyPath</node>
+    <node x="1612.9163312462733" y="339.0">project.model.QRcode</node>
+    <node x="145.08333333333331" y="1841.0">project.Main</node>
+    <node x="0.0" y="918.0">project.controller.bitmatrix_generator.DefaultBitMTgenerator</node>
+    <node x="643.0" y="689.5">project.controller.extractor.Extractor</node>
+    <node x="993.4730934278904" y="918.0">project.controller.qr_inserter.EndNoteQRinserter</node>
+    <node x="141.75" y="1728.0">project.view</node>
+    <node x="1834.4730934278905" y="918.0">project.controller.qrcode_writer.QRcodeWriter</node>
+    <node x="906.9730934278904" y="1063.0">project.Testmain</node>
+    <node x="512.0" y="678.0">project.model.information.Link</node>
+    <node x="0.0" y="1268.0">project.model.MyDoc</node>
+    <node x="1346.4730934278905" y="918.0">project.controller.qr_inserter.FootNoteQRinserter</node>
+    <node x="1710.4730934278905" y="632.0">project.model.QRcodeDatabase</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="project.controller.extractor.Extractor" target="project.model.information.Information">
-      <point x="52.25" y="-60.5" />
-      <point x="587.7916666666667" y="249.0" />
-      <point x="708.4287131519276" y="249.0" />
-      <point x="-58.28571428571422" y="50.5" />
-    </edge>
     <edge source="project.model.information.Link" target="project.model.information.Information">
-      <point x="25.75" y="-50.5" />
-      <point x="746.2440476190477" y="279.0" />
-      <point x="766.7144274376418" y="279.0" />
-      <point x="0.0" y="50.5" />
+      <point x="27.5" y="-72.0" />
+      <point x="594.5" y="612.0" />
+      <point x="577.9038312462733" y="612.0" />
+      <point x="6.7999999999999545" y="72.0" />
+    </edge>
+    <edge source="project.Testmain" target="project.model.QRcode">
+      <point x="46.76923076923072" y="-27.5" />
+      <point x="1029.742324197121" y="1023.0" />
+      <point x="1699.9730934278905" y="1023.0" />
+      <point x="1699.9730934278905" y="612.0" />
+      <point x="1705.7288312462733" y="612.0" />
+      <point x="10.3125" y="106.5" />
+    </edge>
+    <edge source="project.controller.extractor.Extractor" target="project.model.information.Information">
+      <point x="-114.42857142857142" y="-60.5" />
+      <point x="662.0714285714286" y="592.0" />
+      <point x="605.1038312462733" y="592.0" />
+      <point x="34.0" y="72.0" />
     </edge>
     <edge source="project.controller.FileStream" target="project.model.MyDoc">
-      <point x="55.25" y="-118.0" />
-      <point x="165.75" y="450.0" />
-      <point x="111.77168367346928" y="450.0" />
-      <point x="111.77168367346928" y="279.0" />
-      <point x="112.79166666666674" y="279.0" />
-      <point x="-108.25" y="62.0" />
+      <point x="-55.25" y="-118.0" />
+      <point x="112.0625" y="1417.0" />
+      <point x="72.16666666666666" y="1417.0" />
+      <point x="-144.33333333333334" y="62.0" />
     </edge>
-    <edge source="project.controller.extractor.Extractor" target="project.model.information.Page">
-      <point x="-17.41666666666663" y="-60.5" />
-      <point x="518.1250000000001" y="279.0" />
-      <point x="496.54166666666674" y="279.0" />
-      <point x="-39.0" y="60.5" />
+    <edge source="project.controller.extractor.Extractor" target="project.model.Page">
+      <point x="38.14285714285717" y="-60.5" />
+      <point x="814.6428571428571" y="612.0" />
+      <point x="822.4730934278904" y="612.0" />
+      <point x="-39.0" y="72.0" />
     </edge>
     <edge source="project.controller.extractor.LinkExtractor" target="project.controller.extractor.Extractor">
-      <point x="27.875" y="-27.5" />
-      <point x="563.4166666666667" y="450.0" />
-      <point x="587.7916666666667" y="450.0" />
-      <point x="52.25" y="60.5" />
+      <point x="33.125" y="-27.5" />
+      <point x="806.0980934278904" y="893.0" />
+      <point x="843.25" y="893.0" />
+      <point x="66.75" y="60.5" />
     </edge>
-    <edge source="project.view" target="project.view">
-      <point x="0.0" y="26.5" />
-      <point x="371.3125000000001" y="849.0" />
-      <point x="287.3125000000001" y="849.0" />
-      <point x="287.3125000000001" y="802.5" />
-      <point x="-64.0" y="-0.0" />
+    <edge source="project.Testmain" target="project.controller.bitmatrix_generator.DefaultBitMTgenerator">
+      <point x="-58.46153846153845" y="-27.5" />
+      <point x="924.5115549663519" y="1033.0" />
+      <point x="197.25" y="1033.0" />
+      <point x="65.75" y="27.5" />
     </edge>
-    <edge source="project.view" target="project.Main">
-      <point x="40.0" y="-26.5" />
-      <point x="411.3125000000001" y="746.0" />
-      <point x="1126.6466836734694" y="746.0" />
-      <point x="-41.0" y="50.5" />
+    <edge source="project.controller.bitmatrix_generator.VisualBitMTgenerator" target="project.model.information.Information">
+      <point x="52.0" y="-26.5" />
+      <point x="439.0" y="893.0" />
+      <point x="412.7167151162796" y="893.0" />
+      <point x="412.7167151162796" y="592.0" />
+      <point x="537.1038312462733" y="592.0" />
+      <point x="-34.0" y="72.0" />
     </edge>
     <edge source="project.model.MyDoc" target="project.model.MyPDFParser">
       <point x="-54.125" y="-62.0" />
-      <point x="166.91666666666674" y="80.0" />
-      <point x="199.79166666666674" y="80.0" />
+      <point x="162.375" y="1248.0" />
+      <point x="185.35416666666669" y="1248.0" />
       <point x="-21.25" y="27.5" />
     </edge>
-    <edge source="project.view" target="project.controller.extractor.LinkExtractor">
-      <point x="24.0" y="-26.5" />
-      <point x="395.3125000000001" y="736.0" />
-      <point x="591.2916666666667" y="736.0" />
-      <point x="55.75" y="27.5" />
+    <edge source="project.controller.extractor.LinkExtractor" target="project.model.information.Information">
+      <point x="-99.375" y="-27.5" />
+      <point x="673.5980934278904" y="893.0" />
+      <point x="632.5" y="893.0" />
+      <point x="632.5" y="602.0" />
+      <point x="591.5038312462733" y="602.0" />
+      <point x="20.399999999999977" y="72.0" />
     </edge>
-    <edge source="project.controller.qr_generator.VisualQRgenerator" target="project.model.information.Information">
-      <point x="61.33333333333326" y="-26.5" />
-      <point x="1422.9800170068027" y="450.0" />
-      <point x="1406.5834750566896" y="450.0" />
-      <point x="1406.5834750566896" y="269.0" />
-      <point x="825.0001417233561" y="269.0" />
-      <point x="58.285714285714334" y="50.5" />
+    <edge source="project.Testmain" target="project.controller.qr_inserter.EndNoteQRinserter">
+      <point x="11.692307692307622" y="-27.5" />
+      <point x="994.665401120198" y="993.0" />
+      <point x="1076.4730934278905" y="993.0" />
+      <point x="-83.0" y="27.5" />
     </edge>
-    <edge source="project.controller.qr_generator.DefaultQRgenerator" target="project.model.information.Information">
-      <point x="-103.50000000000011" y="-27.5" />
-      <point x="824.1466836734694" y="450.0" />
-      <point x="782.4940476190477" y="450.0" />
-      <point x="782.4940476190477" y="279.0" />
-      <point x="786.1429988662132" y="279.0" />
-      <point x="19.428571428571445" y="50.5" />
+    <edge source="project.controller.bitmatrix_generator.BitMTgenerator" target="project.model.information.Information">
+      <point x="0.0" y="-26.5" />
+      <point x="266.125" y="582.0" />
+      <point x="523.5038312462733" y="582.0" />
+      <point x="-47.60000000000002" y="72.0" />
     </edge>
-    <edge source="project.controller.extractor.LinkExtractor" target="project.model.MyDoc">
-      <point x="-83.625" y="-27.5" />
-      <point x="451.91666666666674" y="450.0" />
-      <point x="242.5" y="450.0" />
-      <point x="242.5" y="279.0" />
-      <point x="257.12500000000006" y="279.0" />
-      <point x="36.083333333333314" y="62.0" />
+    <edge source="project.controller.extractor.LinkExtractor" target="project.model.MyPath">
+      <point x="99.375" y="-27.5" />
+      <point x="872.3480934278904" y="893.0" />
+      <point x="960.9730934278904" y="893.0" />
+      <point x="960.9730934278904" y="299.0" />
+      <point x="1030.2496645796066" y="299.0" />
+      <point x="-46.0" y="129.5" />
+    </edge>
+    <edge source="project.Testmain" target="project.model.information.Information">
+      <point x="-46.76923076923072" y="-27.5" />
+      <point x="936.2038626586597" y="1023.0" />
+      <point x="501.5" y="1023.0" />
+      <point x="501.5" y="602.0" />
+      <point x="550.7038312462734" y="602.0" />
+      <point x="-20.399999999999977" y="72.0" />
+    </edge>
+    <edge source="project.Testmain" target="project.model.MyPath">
+      <point x="-11.692307692307622" y="-27.5" />
+      <point x="971.9730934278904" y="309.0" />
+      <point x="1048.6496645796067" y="309.0" />
+      <point x="-27.59999999999991" y="129.5" />
+    </edge>
+    <edge source="project.model.QRcode" target="project.model.MyPath">
+      <point x="41.25" y="-106.5" />
+      <point x="1736.6663312462733" y="279.0" />
+      <point x="1159.0496645796065" y="279.0" />
+      <point x="82.79999999999995" y="129.5" />
+    </edge>
+    <edge source="project.controller.qrcode_writer.QRcodeWriter" target="project.model.QRcode">
+      <point x="0.0" y="-27.5" />
+      <point x="1932.9730934278905" y="592.0" />
+      <point x="1767.6038312462733" y="592.0" />
+      <point x="72.1875" y="106.5" />
+    </edge>
+    <edge source="project.Testmain" target="project.controller.qrcode_writer.QRcodeWriter">
+      <point x="70.15384615384619" y="-27.5" />
+      <point x="1053.1269395817367" y="1043.0" />
+      <point x="1982.2230934278905" y="1043.0" />
+      <point x="49.25" y="27.5" />
+    </edge>
+    <edge source="project.view" target="project.view">
+      <point x="-42.666666666666664" y="26.5" />
+      <point x="163.08333333333334" y="1801.0" />
+      <point x="121.75000000000001" y="1801.0" />
+      <point x="121.75000000000001" y="1754.5" />
+      <point x="-64.0" y="-0.0" />
+    </edge>
+    <edge source="project.controller.bitmatrix_generator.DefaultBitMTgenerator" target="project.model.information.Information">
+      <point x="-65.75" y="-27.5" />
+      <point x="65.75" y="893.0" />
+      <point x="106.82692467416382" y="893.0" />
+      <point x="106.82692467416382" y="572.0" />
+      <point x="509.9038312462733" y="572.0" />
+      <point x="-61.200000000000045" y="72.0" />
+    </edge>
+    <edge source="project.view" target="project.Main">
+      <point x="42.66666666666663" y="26.5" />
+      <point x="248.41666666666663" y="1821.0" />
+      <point x="268.0833333333333" y="1821.0" />
+      <point x="41.0" y="-50.5" />
     </edge>
     <edge source="project.Main" target="project.view">
-      <point x="41.0" y="50.5" />
-      <point x="1208.6466836734694" y="756.0" />
-      <point x="427.3125000000001" y="756.0" />
-      <point x="56.0" y="-26.5" />
-    </edge>
-    <edge source="project.view" target="project.controller.FileStream">
-      <point x="-24.0" y="-26.5" />
-      <point x="347.3125000000001" y="736.0" />
-      <point x="184.16666666666669" y="736.0" />
-      <point x="73.66666666666669" y="118.0" />
-    </edge>
-    <edge source="project.controller.extractor.LinkExtractor" target="project.model.information.Link">
-      <point x="83.625" y="-27.5" />
-      <point x="619.1666666666667" y="450.0" />
-      <point x="720.4940476190477" y="450.0" />
-      <point x="0.0" y="50.5" />
-    </edge>
-    <edge source="project.controller.qr_generator.QRgenerator" target="project.model.information.Information">
-      <point x="0.0" y="-27.5" />
-      <point x="1253.0513038548754" y="279.0" />
-      <point x="805.5715702947847" y="279.0" />
-      <point x="38.85714285714289" y="50.5" />
-    </edge>
-    <edge source="project.model.MyPDFParser" target="project.model.MyDoc">
-      <point x="21.25" y="27.5" />
-      <point x="242.29166666666674" y="80.0" />
-      <point x="275.16666666666674" y="80.0" />
-      <point x="54.125" y="-62.0" />
-    </edge>
-    <edge source="project.controller.extractor.Extractor" target="project.model.MyDoc">
-      <point x="-52.25" y="-60.5" />
-      <point x="483.29166666666674" y="269.0" />
-      <point x="401.4583333333334" y="269.0" />
-      <point x="180.41666666666669" y="62.0" />
-    </edge>
-    <edge source="project.controller.qr_generator.VisualQRgenerator" target="project.controller.qr_generator.QRgenerator">
-      <point x="-61.33333333333326" y="-26.5" />
-      <point x="1300.3133503401361" y="450.0" />
-      <point x="1281.8013038548754" y="450.0" />
-      <point x="28.75" y="27.5" />
-    </edge>
-    <edge source="project.controller.qr_generator.DefaultQRgenerator" target="project.controller.qr_generator.QRgenerator">
-      <point x="103.49999999999989" y="-27.5" />
-      <point x="1031.1466836734694" y="450.0" />
-      <point x="1224.3013038548754" y="450.0" />
-      <point x="-28.75" y="27.5" />
-    </edge>
-    <edge source="project.view" target="project.model.MyDoc">
-      <point x="-8.0" y="-26.5" />
-      <point x="363.3125000000001" y="726.0" />
-      <point x="231.5" y="726.0" />
-      <point x="231.5" y="279.0" />
-      <point x="184.95833333333337" y="279.0" />
-      <point x="-36.08333333333337" y="62.0" />
-    </edge>
-    <edge source="project.controller.qr_generator.DefaultQRgenerator" target="project.model.exception">
-      <point x="-34.500000000000114" y="-27.5" />
-      <point x="893.1466836734694" y="450.0" />
-      <point x="876.9940476190477" y="450.0" />
+      <point x="-41.0" y="-50.5" />
+      <point x="186.08333333333331" y="1821.0" />
+      <point x="205.75" y="1821.0" />
       <point x="0.0" y="26.5" />
     </edge>
+    <edge source="project.controller.extractor.Extractor" target="project.model.MyPath">
+      <point x="114.42857142857144" y="-60.5" />
+      <point x="890.9285714285714" y="612.0" />
+      <point x="949.9730934278904" y="612.0" />
+      <point x="949.9730934278904" y="289.0" />
+      <point x="1011.8496645796065" y="289.0" />
+      <point x="-64.40000000000009" y="129.5" />
+    </edge>
+    <edge source="project.controller.qr_inserter.FootNoteQRinserter" target="project.model.MyPath">
+      <point x="0.0" y="-27.5" />
+      <point x="1512.4730934278905" y="893.0" />
+      <point x="1533.7768762245507" y="893.0" />
+      <point x="1533.7768762245507" y="299.0" />
+      <point x="1122.2496645796066" y="299.0" />
+      <point x="46.0" y="129.5" />
+    </edge>
+    <edge source="project.view" target="project.controller.FileStream">
+      <point x="-16.0" y="-26.5" />
+      <point x="189.75" y="1703.0" />
+      <point x="167.3125" y="1703.0" />
+      <point x="0.0" y="118.0" />
+    </edge>
+    <edge source="project.controller.qr_inserter.EndNoteQRinserter" target="project.controller.qr_inserter.QRinserter">
+      <point x="110.66666666666674" y="-27.5" />
+      <point x="1270.139760094557" y="893.0" />
+      <point x="1254.4163312462733" y="893.0" />
+      <point x="-83.0" y="27.5" />
+    </edge>
+    <edge source="project.controller.qr_inserter.FootNoteQRinserter" target="project.model.QRcode">
+      <point x="110.66666666666674" y="-27.5" />
+      <point x="1623.139760094557" y="893.0" />
+      <point x="1596.1770833333335" y="893.0" />
+      <point x="1596.1770833333335" y="612.0" />
+      <point x="1664.4788312462733" y="612.0" />
+      <point x="-30.9375" y="106.5" />
+    </edge>
+    <edge source="project.model.MyPDFParser" target="project.model.MyDoc">
+      <point x="63.75" y="27.5" />
+      <point x="270.3541666666667" y="1238.0" />
+      <point x="378.875" y="1238.0" />
+      <point x="162.375" y="-62.0" />
+    </edge>
+    <edge source="project.controller.qr_inserter.EndNoteQRinserter" target="project.model.MyPath">
+      <point x="-110.66666666666674" y="-27.5" />
+      <point x="1048.8064267612235" y="893.0" />
+      <point x="1102.7435913408303" y="893.0" />
+      <point x="1102.7435913408303" y="319.0" />
+      <point x="1085.4496645796066" y="319.0" />
+      <point x="9.200000000000045" y="129.5" />
+    </edge>
+    <edge source="project.controller.qr_inserter.QRinserter" target="project.model.MyPath">
+      <point x="-83.0" y="-27.5" />
+      <point x="1254.4163312462733" y="309.0" />
+      <point x="1103.8496645796067" y="309.0" />
+      <point x="27.600000000000136" y="129.5" />
+    </edge>
+    <edge source="project.model.QRcodeDatabase" target="project.model.QRcode">
+      <point x="-53.0" y="-118.0" />
+      <point x="1763.4730934278905" y="612.0" />
+      <point x="1726.3538312462733" y="612.0" />
+      <point x="30.9375" y="106.5" />
+    </edge>
+    <edge source="project.controller.qr_inserter.EndNoteQRinserter" target="project.model.QRcode">
+      <point x="0.0" y="-27.5" />
+      <point x="1159.4730934278905" y="893.0" />
+      <point x="1139.6125484496129" y="893.0" />
+      <point x="1139.6125484496129" y="592.0" />
+      <point x="1623.2288312462733" y="592.0" />
+      <point x="-72.1875" y="106.5" />
+    </edge>
+    <edge source="project.controller.qr_inserter.FootNoteQRinserter" target="project.controller.qr_inserter.QRinserter">
+      <point x="-110.66666666666674" y="-27.5" />
+      <point x="1401.8064267612235" y="893.0" />
+      <point x="1420.4163312462733" y="893.0" />
+      <point x="83.0" y="27.5" />
+    </edge>
+    <edge source="project.controller.qr_inserter.QRinserter" target="project.model.QRcode">
+      <point x="83.0" y="-27.5" />
+      <point x="1420.4163312462733" y="602.0" />
+      <point x="1643.8538312462733" y="602.0" />
+      <point x="-51.5625" y="106.5" />
+    </edge>
+    <edge source="project.Testmain" target="project.controller.extractor.LinkExtractor">
+      <point x="-35.076923076923094" y="-27.5" />
+      <point x="947.8961703509673" y="1013.0" />
+      <point x="706.7230934278904" y="1013.0" />
+      <point x="-66.25" y="27.5" />
+    </edge>
+    <edge source="project.view" target="project.model.MyDoc">
+      <point x="48.0" y="-26.5" />
+      <point x="253.75" y="1703.0" />
+      <point x="288.3125" y="1703.0" />
+      <point x="288.3125" y="1417.0" />
+      <point x="360.83333333333337" y="1417.0" />
+      <point x="144.33333333333337" y="62.0" />
+    </edge>
+    <edge source="project.controller.bitmatrix_generator.VisualBitMTgenerator" target="project.controller.bitmatrix_generator.BitMTgenerator">
+      <point x="-52.0" y="-26.5" />
+      <point x="335.0" y="893.0" />
+      <point x="306.125" y="893.0" />
+      <point x="40.0" y="26.5" />
+    </edge>
+    <edge source="project.controller.bitmatrix_generator.DefaultBitMTgenerator" target="project.controller.bitmatrix_generator.BitMTgenerator">
+      <point x="65.75" y="-27.5" />
+      <point x="197.25" y="893.0" />
+      <point x="226.125" y="893.0" />
+      <point x="-40.0" y="26.5" />
+    </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.6936656282450675" x="626.0" y="462.0" />
-  <SelectedNodes>
-    <node>project.model.MyDoc</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="0.8" x="663.125" y="829.75" />
+  <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
     <Category>Methods</Category>

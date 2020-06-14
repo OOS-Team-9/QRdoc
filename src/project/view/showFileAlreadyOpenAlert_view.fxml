@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="178.0" prefWidth="312.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.view.showFileAlreadyOpenAlertController">
+   <children>
+      <Label layoutX="15.0" layoutY="24.0" prefHeight="133.0" prefWidth="285.0" text="저장할려는 파일이 열려있습니다. 닫은 후 저장 버튼을 눌러주세요." wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="24.0" />
+
+      <HBox alignment="CENTER_RIGHT" layoutX="99.0" layoutY="160.0" prefHeight="33.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="cancleButton" mnemonicParsing="false" text="취소" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -1,5 +1,7 @@
 package project.view;
 
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +19,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import project.Main;
 import project.controller.FileStream;
+import project.controller.bitmatrix_generator.DefaultBitMTgenerator;
 import project.controller.extractor.LinkExtractor;
+import project.controller.qr_inserter.EndNoteQRinserter;
+import project.controller.qr_inserter.IndicesInserter;
+import project.controller.qrcode_writer.QRcodeWriter;
 import project.model.MyDoc;
+import project.model.QRcode;
+import project.model.information.Link;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -33,6 +42,7 @@ public class MainViewController implements Initializable {
 
 	MyDoc myDoc;
 	FileStream myDocStream;
+	ArrayList<ArrayList<QRcode>> qrCodeObjList = new ArrayList<>();
 	
 	@FXML
 	private Button btnOpen;
@@ -95,8 +105,13 @@ public class MainViewController implements Initializable {
 					File newFile = new File(file.getAbsolutePath()+".pdf");
 					file = newFile;
 				}
-				myDocStream.saveDoc(file);
-				System.out.println("saved"+ file.getAbsolutePath());
+				if(!myDocStream.saveDoc(file).equals("(요청한 작업은, 사용자가 매핑한 구역이 열려 있는 상태인 파일에서 수행할 수 없습니다)")){
+					showFileAlreadyOpenAlertDialog();
+				}
+				else{
+					System.out.println("saved"+ file.getAbsolutePath());
+				}
+
 			}
 			else{
 				showSelectSaveDialog(myDocStream);
@@ -108,7 +123,64 @@ public class MainViewController implements Initializable {
 				linkExtractor.readTexts();
 				linkExtractor.extract();
 				linkExtractor.setPos();
-				
+				ArrayList<ArrayList<Link>> linkList = linkExtractor.getInfoList();
+
+				//
+				//  Default Bit Generator 작동!
+				//
+				DefaultBitMTgenerator bitMTgenerator = new DefaultBitMTgenerator();
+				ArrayList<ArrayList<BitMatrix>> bitMatrixList = new ArrayList<>();
+				BitMatrix bitmatrix = null;
+				for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
+					bitMatrixList.add(new ArrayList<BitMatrix>());
+					for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder).size(); infoOrderPerOnePage++) {
+						try {
+							bitmatrix = bitMTgenerator.generate(linkList.get(pageOrder).get(infoOrderPerOnePage), 100, 100);
+							bitMatrixList.get(pageOrder).add(bitmatrix);
+						} catch (WriterException e) {
+							System.out.println("BitMTgenerator::generate ERROR: " +
+									"[ " + linkList.get(pageOrder).get(infoOrderPerOnePage).getText() + " ]을 bit matrix로 변환할 수 없습니다.");
+						}
+					}
+				}
+
+				//
+				//  QR-code 객체 리스트 생성!!
+				//
+
+				QRcode qrCodeObj = null;
+				for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
+					qrCodeObjList.add(new ArrayList<>());
+					for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder).size(); infoOrderPerOnePage++) {
+							qrCodeObj = new QRcode(
+									pageOrder,
+									infoOrderPerOnePage,
+									bitMatrixList.get(pageOrder).get(infoOrderPerOnePage));
+							qrCodeObjList.get(pageOrder).add(qrCodeObj);
+							qrCodeObj.print();
+					}
+				}
+
+				QRcodeWriter qrCodeWriter = new QRcodeWriter();
+				for (ArrayList<QRcode> qrCodeObjListPerPage : qrCodeObjList) {
+					for (QRcode obj : qrCodeObjListPerPage) {
+						try {
+							qrCodeWriter.writeQRcode(obj);
+						} catch (IOException e) {
+							System.out.println(e.getMessage());
+						}
+					}
+				}
+
+				EndNoteQRinserter qrInserter = new EndNoteQRinserter();
+				try {
+					qrInserter.insert(qrCodeObjList,myDoc);
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				}
+
+				IndicesInserter.addIndices(myDoc,linkList);
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -188,6 +260,27 @@ public class MainViewController implements Initializable {
 			loader.setLocation(Main.class.getResource("view/showFileInputAlert_view.fxml"));
 			AnchorPane page = (AnchorPane)loader.load();
 			showFileInputAlertController controller = loader.getController();
+			Stage selectSaveStage = new Stage();
+			Scene scene = new Scene(page);
+			selectSaveStage.setTitle("Alert");
+			selectSaveStage.initModality(Modality.WINDOW_MODAL);
+			selectSaveStage.initOwner(primaryStage);
+			selectSaveStage.setScene(scene);
+			controller.setDialogStage(selectSaveStage);
+			selectSaveStage.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+	public void showFileAlreadyOpenAlertDialog(){
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("view/showFileAlreadyOpenAlert_view.fxml"));
+			AnchorPane page = (AnchorPane)loader.load();
+			showFileAlreadyOpenAlertController controller = loader.getController();
 			Stage selectSaveStage = new Stage();
 			Scene scene = new Scene(page);
 			selectSaveStage.setTitle("Alert");

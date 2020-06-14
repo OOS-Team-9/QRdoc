@@ -32,7 +32,7 @@ abstract public class Extractor<T extends Information> {
 
 
 
-     //links[0]에는 1쪽의 링크들의 ArrayList가 담김
+    //links[0]에는 1쪽의 링크들의 ArrayList가 담김
 
 
 
@@ -108,10 +108,14 @@ abstract public class Extractor<T extends Information> {
                 //i번째 페이지의 j번째 info의 위치 정보와 폰트 사이즈 저장
                 //System.out.println("test"+infoList.get(i).get(j).getText());
                 int infoIndex=text.indexOf(infoList.get(i).get(j).getText())+infoList.get(i).get(j).getText().length()-1;
+
+                //text=text.substring(infoIndex+1,text.length()-1);
                 //System.out.println(listTP.get(i).get(infoIndex).toString());
                 infoList.get(i).get(j).setxPos(listTP.get(i).get(infoIndex).getEndX());
                 infoList.get(i).get(j).setyPos(listTP.get(i).get(infoIndex).getEndY());
                 infoList.get(i).get(j).setFontSize(listTP.get(i).get(infoIndex).getFontSize());
+                System.out.println(infoList.get(i).get(j).getText().length());
+                text = text.replaceFirst(infoList.get(i).get(j).getText(),replaceString(infoList.get(i).get(j).getText().length()));
             }
         }
         //테스트용 출력
@@ -127,6 +131,13 @@ abstract public class Extractor<T extends Information> {
 
     }
 
+    String replaceString(int num){
+        String temp = "";
+        for(int i = 0; i < num; i++){
+            temp += (" ");
+        }
+        return temp;
+    }
 
     /**
      * 문서 안에서 특정 패턴을 만족하는 문자열을 추출하는 함수

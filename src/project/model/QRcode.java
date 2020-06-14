@@ -2,83 +2,61 @@ package project.model;
 
 import com.google.zxing.common.BitMatrix;
 
+import java.awt.image.BufferedImage;
+
+/**
+ * QR-code 정보를 담고 있는 클래스
+ */
 public class QRcode {
 
-    private int order;
-    private BitMatrix bitmatrix;
-    private String path;
-    private String directory;
-    private String fileName;
-    private String fileType;
-    private int width;
-    private int height;
+    private int pageOrder;              //페이지 순서
+    private int infoOrderInOnePage;     //페이지 안에서 정보 순서
+    private BitMatrix bitmatrix;        //bit matrix
+    private BufferedImage image;
+    //private MyPath path;                //QR-code 이미지 파일 저장 경로
 
-    public QRcode(int order, BitMatrix bitmatrix,
-                  String path,
-                  String directory,
-                  String fileName,
-                  String fileType,
-                  int width,
-                  int height) {
-        this.order = order;
+    public QRcode(int pageOrder,
+                  int infoOrderInOnePage,
+                  BitMatrix bitmatrix) {
+        this.pageOrder = pageOrder;
+        this.infoOrderInOnePage = infoOrderInOnePage;
         this.bitmatrix = bitmatrix;
-        this.path = path;
-        this.directory = directory;
-        this.fileName = fileName;
-        this.fileType = fileType;
-        this.width = width;
-        this.height = height;
+        //this.path = path;
     }
 
     public QRcode() {
     }
 
-    public String getPath() {
-        return path;
+    public BufferedImage getImage() {
+        return image;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 
-    public String getDirectory() {
-        return directory;
+    public int getPageOrder() {
+        return pageOrder;
     }
 
-    public void setDirectory(String directory) {
-        this.directory = directory;
+    public void setPageOrder(int pageOrder) {
+        this.pageOrder = pageOrder;
     }
 
-    public String getFileName() {
-        return fileName;
+    public int getInfoOrderInOnePage() {
+        return infoOrderInOnePage;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getFileType() {
-        return fileType;
-    }
-
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
+    public void setInfoOrderInOnePage(int infoOrderInOnePage) {
+        this.infoOrderInOnePage = infoOrderInOnePage;
     }
 
     public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
+        return bitmatrix.getWidth();
     }
 
     public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
+        return bitmatrix.getHeight();
     }
 
     public BitMatrix getBitmatrix() {
@@ -89,11 +67,10 @@ public class QRcode {
         this.bitmatrix = bitmatrix;
     }
 
-    public int getOrder() {
-        return order;
-    }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void print() {
+        System.out.println("\n------[ " + pageOrder + " - " + infoOrderInOnePage + " ]번째 QRcode 객체------");
+        System.out.println("width: " + getWidth());
+        System.out.println("height: " + getHeight());
     }
 }

@@ -14,7 +14,6 @@ public class Main extends Application {
 	private AnchorPane root;
 	private Stage primaryStage;
 
-	
 	public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("QRdoc");

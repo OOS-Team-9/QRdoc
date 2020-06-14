@@ -14,3 +14,4 @@ public class Stripper extends PDFTextStripper {
         return charactersByArticle;
     }
 }
+
