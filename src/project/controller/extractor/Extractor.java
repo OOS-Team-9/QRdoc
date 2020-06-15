@@ -130,6 +130,41 @@ abstract public class Extractor<T extends Information> {
 
 
     }
+    private void findBlank() {
+        for (int i = 0; i < pageList.size(); i++) {
+            for (int j = 0; j < listTP.get(i).size(); j++) {
+                TextPosition target = listTP.get(i).get(j);
+                if (target.getUnicode().equals(" ") | target.getUnicode().equals("\t") | target.getUnicode().equals("\n"))
+                    continue;
+                int x = (int) target.getEndX();
+                int y = (int) target.getEndY();
+                pageList.get(i).fillBlank(x / 50, y / 50);
+            }
+        }
+    }
+    public void findBlankForQRcode(){
+        findBlank();
+        for(int i=0;i<pageList.size();i++) {
+            Page p=pageList.get(i);
+            for (int x = 0; x < 11; x++) {
+                for (int y = 0; y < 16; y++) {
+                    if (p.isThereBlankAt(x,y)&&p.isThereBlankAt(x+1,y)&&p.isThereBlankAt(x,y+1)&&p.isThereBlankAt(x+1,y+1))
+                        p.addAvailableBlankForQRcode(x,y);
+                }
+            }
+        }
+        //test
+        for(int y=16;y>=0;y--){
+            for(int x=0;x<12;x++){
+               System.out.print(pageList.get(0).isThereBlankAt(x,y)+" ");
+            }
+            System.out.println(" ");
+        }
+
+    }
+
+
+
 
     String replaceString(int num){
         String temp = "";
