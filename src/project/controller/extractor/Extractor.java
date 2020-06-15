@@ -1,5 +1,6 @@
 package project.controller.extractor;
 
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
 import project.model.MyDoc;
@@ -130,7 +131,7 @@ abstract public class Extractor<T extends Information> {
 
 
     }
-    private void findBlank() {
+    private void findBlank() throws IOException {
         for (int i = 0; i < pageList.size(); i++) {
             for (int j = 0; j < listTP.get(i).size(); j++) {
                 TextPosition target = listTP.get(i).get(j);
@@ -141,8 +142,22 @@ abstract public class Extractor<T extends Information> {
                 pageList.get(i).fillBlank(x / 50, y / 50);
             }
         }
+
+        int pageIndex=0;
+        for(PDPage page:doc.getPages()){
+            ImageLocationGetter printer=new ImageLocationGetter(pageIndex);
+            printer.processPage(page);
+            Page temp=printer.getPageWBlankInfo(pageIndex);
+            for(int x=0;x<12;x++){
+                for(int y=0;y<17;y++){
+                    if(temp.isThereBlankAt(x,y)==false)
+                        pageList.get(pageIndex).fillBlank(x,y);
+                }
+            }
+            pageIndex++;
+        }
     }
-    public void findBlankForQRcode(){
+    public void findBlankForQRcode() throws IOException {
         findBlank();
         for(int i=0;i<pageList.size();i++) {
             Page p=pageList.get(i);
