@@ -84,7 +84,7 @@ public class EndNoteQRinserter extends QRinserter {
                     }
                     contents.setFont(PDType1Font.TIMES_ROMAN, 15);
                     if (m == 0)
-                        contents.newLineAtOffset(25, ((((tempTotal - 1) % 20) / 4) + 1) * 150);
+                        contents.newLineAtOffset(25, ((((tempTotal - 1) % 20) / 4) + 1) * 150 - 35);
                     else
                         contents.newLineAtOffset(0, -150);
                     contents.showText(text);
@@ -108,7 +108,7 @@ public class EndNoteQRinserter extends QRinserter {
                             n++;
                         tempImage = qrCodeListOneLine.get(n - 1).getImage();
                         pdImage = LosslessFactory.createFromImage(doc, tempImage);// Creating PDImageXObject object
-                        contents.drawImage(pdImage, 140 * (l) + 48, ((((tempTotal - 1) % 20) / 4) + 1 - m) * 150 - 90);
+                        contents.drawImage(pdImage, 140 * (l) + 48, ((((tempTotal - 1) % 20) / 4) + 1 - m) * 150 - 125);
                         i++;
                         l++;
                     }
