@@ -121,6 +121,7 @@ public class MainViewController implements Initializable {
 			try {
 				LinkExtractor linkExtractor=new LinkExtractor(myDoc);
 				linkExtractor.readTexts();
+				linkExtractor.findBlankForQRcode();
 				linkExtractor.extract();
 				linkExtractor.setPos();
 				ArrayList<ArrayList<Link>> linkList = linkExtractor.getInfoList();

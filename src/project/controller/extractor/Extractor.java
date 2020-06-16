@@ -1,5 +1,6 @@
 package project.controller.extractor;
 
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
 import project.model.MyDoc;
@@ -98,12 +99,14 @@ abstract public class Extractor<T extends Information> {
         }
         System.out.println("TP size"+listTP.get(0).size()+"TP: "+listTP.get(0).toString());
     }
+    //
     public void setPos(){
         String text;
         for(int i=0;i<pageList.size();i++){
             text=pageList.get(i).getText();
 
             for(int j=0;j<infoList.get(i).size();j++){
+                //i번째 페이지의 j번째 info의 위치 정보와 폰트 사이즈 저장
                 //System.out.println("test"+infoList.get(i).get(j).getText());
                 int infoIndex=text.indexOf(infoList.get(i).get(j).getText())+infoList.get(i).get(j).getText().length()-1;
 
@@ -116,7 +119,7 @@ abstract public class Extractor<T extends Information> {
                 text = text.replaceFirst(infoList.get(i).get(j).getText(),replaceString(infoList.get(i).get(j).getText().length()));
             }
         }
-
+        //테스트용 출력
         for(int i=0;i<pageList.size();i++) {
             for (int j = 0; j < infoList.get(i).size(); j++) {
                 System.out.println("text: " + infoList.get(i).get(j).getText());
@@ -128,6 +131,55 @@ abstract public class Extractor<T extends Information> {
 
 
     }
+    private void findBlank() throws IOException {
+        for (int i = 0; i < pageList.size(); i++) {
+            for (int j = 0; j < listTP.get(i).size(); j++) {
+                TextPosition target = listTP.get(i).get(j);
+                if (target.getUnicode().equals(" ") | target.getUnicode().equals("\t") | target.getUnicode().equals("\n"))
+                    continue;
+                int x = (int) target.getEndX();
+                int y = (int) target.getEndY();
+                pageList.get(i).fillBlank(x / 50, y / 50);
+            }
+        }
+
+        int pageIndex=0;
+        for(PDPage page:doc.getPages()){
+            ImageLocationGetter printer=new ImageLocationGetter(pageIndex);
+            printer.processPage(page);
+            Page temp=printer.getPageWBlankInfo(pageIndex);
+            for(int x=0;x<12;x++){
+                for(int y=0;y<17;y++){
+                    if(temp.isThereBlankAt(x,y)==false)
+                        pageList.get(pageIndex).fillBlank(x,y);
+                }
+            }
+            pageIndex++;
+        }
+    }
+    public void findBlankForQRcode() throws IOException {
+        findBlank();
+        for(int i=0;i<pageList.size();i++) {
+            Page p=pageList.get(i);
+            for (int x = 0; x < 11; x++) {
+                for (int y = 0; y < 16; y++) {
+                    if (p.isThereBlankAt(x,y)&&p.isThereBlankAt(x+1,y)&&p.isThereBlankAt(x,y+1)&&p.isThereBlankAt(x+1,y+1))
+                        p.addAvailableBlankForQRcode(x,y);
+                }
+            }
+        }
+        //test
+        for(int y=16;y>=0;y--){
+            for(int x=0;x<12;x++){
+               System.out.print(pageList.get(0).isThereBlankAt(x,y)+" ");
+            }
+            System.out.println(" ");
+        }
+
+    }
+
+
+
 
     String replaceString(int num){
         String temp = "";

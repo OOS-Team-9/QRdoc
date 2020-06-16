@@ -9,6 +9,7 @@ public class Information {
     private String text;        //문자열.
     private int textPos;        //문자열의 위치.
     private int order;          //문자열의 순서값.
+    //각 info의 마지막 글자의 위치 정보와 폰트 사이즈
     private float xPos;
     private float yPos;
     private float fontSize;
