@@ -20,6 +20,6 @@ public abstract class QRinserter {
      * @param qrCodeList PDF파일에 삽입할 QR-code 모음
      * @throws IOException
      */
-    public abstract void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc) throws IOException;
+    public abstract void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder) throws IOException;
 }
 

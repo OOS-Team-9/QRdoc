@@ -175,7 +175,7 @@ public class MainViewController implements Initializable {
 
 				EndNoteQRinserter qrInserter = new EndNoteQRinserter();
 				try {
-					qrInserter.insert(qrCodeObjList,myDoc);
+					qrInserter.insert(qrCodeObjList,myDoc,0);//0 의미없음
 				} catch (IOException e) {
 					System.out.println(e.getMessage());
 				}

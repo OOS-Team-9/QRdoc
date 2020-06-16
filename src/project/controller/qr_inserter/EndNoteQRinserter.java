@@ -1,18 +1,14 @@
 package project.controller.qr_inserter;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import project.controller.FileStream;
 import project.model.MyDoc;
 import project.model.QRcode;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -27,16 +23,13 @@ public class EndNoteQRinserter extends QRinserter {
      * @param qrCodeList PDF파일에 삽입할 QR-code 모음
      * @throws IOException
      */
-    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc) throws IOException {
+    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int page) throws IOException {
         // 변수 선언 및 정의
-        int i = 1, j, l = 0, m = 0, n = 0; // i=QRcode파일 카운터,n=QRcode 지수
+        int i = 1, j, l = 0, m = 0, n = 0; // i=QRcode파일 카운터,n=QRcode 지수,l=한줄에 4개 카운트
         int total = 0, tempTotal = 0, pageNum = 0; // total=파일 수, pageNum=추가될 페이지수
-        String s, t;
-
-        BufferedImage tempImage;
+        String s;
         String text = "";
-        Image image = null;
-        int pageOffset = 0;
+        BufferedImage tempImage;
 
         // 문서 열기
         MyDoc doc = null;
@@ -55,9 +48,9 @@ public class EndNoteQRinserter extends QRinserter {
 
         pageNum = (total - 1) / 20 + 1;
         PDPage blankPage = new PDPage();
-
         PDImageXObject pdImage;
         PDPageContentStream contents;
+
         while (pageNum > 0) {
             if (pageNum == 1) {
                 tempTotal = total;
@@ -79,10 +72,8 @@ public class EndNoteQRinserter extends QRinserter {
                     }
                     while (l < j) {
                         n++;
-                        System.out.println("오잉" + n);
                         while (!qrCodeListOneLine.get(n - 1).getCheckInserted())
                             n++;
-                        System.out.println("오잉" + n);
                         s = Integer.toString(n);
                         if (i < 10)
                             text += "  ";
@@ -115,7 +106,6 @@ public class EndNoteQRinserter extends QRinserter {
                         n++;
                         while (!qrCodeListOneLine.get(n - 1).getCheckInserted())
                             n++;
-                        System.out.println(n);
                         tempImage = qrCodeListOneLine.get(n - 1).getImage();
                         pdImage = LosslessFactory.createFromImage(doc, tempImage);// Creating PDImageXObject object
                         contents.drawImage(pdImage, 140 * (l) + 48, ((((tempTotal - 1) % 20) / 4) + 1 - m) * 150 - 90);
