@@ -43,17 +43,16 @@ public class MainViewController implements Initializable {
 
 	Image image[];
 
-	String arg ;
+	String arg;
 	MyDoc myDoc;
 	FileStream myDocStream;
-
-	
+	ArrayList<ArrayList<QRcode>> qrCodeObjList = new ArrayList<>();
 	@FXML
 	private Button btnOpen;
-	
+
 	@FXML
 	private Button btnSave;
-	
+
 	@FXML
 	private Button btnConversion;
 
@@ -74,26 +73,26 @@ public class MainViewController implements Initializable {
 
 	private Stage primaryStage;
 
-	public void setPrimaryStage(Stage primaryStage){
+	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		btnOpen.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
+		btnOpen.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) -> {
 			resetView();
 			FileChooser fileChooser = new FileChooser();
 			FileChooser.ExtensionFilter docType = new FileChooser.ExtensionFilter("pdf file", "*.pdf");
 			fileChooser.getExtensionFilters().addAll(docType);
 			File inputFile;
 			inputFile = fileChooser.showOpenDialog(null);
-			if(inputFile == null){
+			if (inputFile == null) {
 				return;
 			}
 			setPDFDoc(inputFile);
 		});
-		btnSave.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
-			if(myDoc == null){
+		btnSave.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) -> {
+			if (myDoc == null) {
 				showFileInputAlertDialog();
 				return;
 			}
@@ -101,22 +100,69 @@ public class MainViewController implements Initializable {
 			File file = fileChooser.showSaveDialog(primaryStage.getScene().getWindow());
 			if (file != null) {
 				String[] temp = file.getName().split("\\.");
-				if(!temp[temp.length-1].equals("pdf")){
-					File newFile = new File(file.getAbsolutePath()+".pdf");
+				if (!temp[temp.length - 1].equals("pdf")) {
+					File newFile = new File(file.getAbsolutePath() + ".pdf");
 					file = newFile;
 				}
-				if(myDocStream.saveDoc(file).contains("(요청한 작업은, 사용자가 매핑한 구역이 열려 있는 상태인 파일에서 수행할 수 없습니다)")){
+				if (myDocStream.saveDoc(file).contains("(요청한 작업은, 사용자가 매핑한 구역이 열려 있는 상태인 파일에서 수행할 수 없습니다)")) {
 					showFileAlreadyOpenAlertDialog();
-				}
-				else{
-					System.out.println("saved"+ file.getAbsolutePath());
+				} else {
+					System.out.println("saved" + file.getAbsolutePath());
 				}
 
-			}
-			else{
+			} else {
 				showSelectSaveDialog(myDocStream);
 			}
 		});
+<<<<<<< HEAD
+		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) -> {
+
+			try {
+				LinkExtractor linkExtractor = new LinkExtractor(myDoc);
+				linkExtractor.readTexts();
+				linkExtractor.findBlankForQRcode();
+				linkExtractor.extract();
+				linkExtractor.setPos();
+				ArrayList<ArrayList<Link>> linkList = linkExtractor.getInfoList();
+
+				//
+				// Default Bit Generator 작동!
+				//
+				DefaultBitMTgenerator bitMTgenerator = new DefaultBitMTgenerator();
+				ArrayList<ArrayList<BitMatrix>> bitMatrixList = new ArrayList<>();
+				BitMatrix bitmatrix = null;
+				for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
+					bitMatrixList.add(new ArrayList<BitMatrix>());
+					for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder)
+							.size(); infoOrderPerOnePage++) {
+						try {
+							bitmatrix = bitMTgenerator.generate(linkList.get(pageOrder).get(infoOrderPerOnePage), 100,
+									100);
+							bitMatrixList.get(pageOrder).add(bitmatrix);
+						} catch (WriterException e) {
+							System.out.println("BitMTgenerator::generate ERROR: " + "[ "
+									+ linkList.get(pageOrder).get(infoOrderPerOnePage).getText()
+									+ " ]을 bit matrix로 변환할 수 없습니다.");
+						}
+					}
+				}
+
+				//
+				// QR-code 객체 리스트 생성!!
+				//
+
+				QRcode qrCodeObj = null;
+				for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
+					qrCodeObjList.add(new ArrayList<>());
+					for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder)
+							.size(); infoOrderPerOnePage++) {
+						qrCodeObj = new QRcode(pageOrder, infoOrderPerOnePage,
+								bitMatrixList.get(pageOrder).get(infoOrderPerOnePage));
+						qrCodeObjList.get(pageOrder).add(qrCodeObj);
+						qrCodeObj.print();
+					}
+				}
+=======
 		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
 			try {
 			LinkExtractor linkExtractor = new LinkExtractor(myDoc);
@@ -140,6 +186,7 @@ public class MainViewController implements Initializable {
 				Page page=linkExtractor.getPageList().get(pageOrder);
 				ArrayList<Integer[]> allBlank =page.getAvailableBlankForQRcode();
 				int footBlankCount=0;
+>>>>>>> 535240798cb743ba49dd2ba1f5d4a9788cff3c7c
 
 				for(int j=0;j<allBlank.size();j++) {
 					if (allBlank.get(j)[1]==0)
@@ -168,6 +215,11 @@ public class MainViewController implements Initializable {
 				qrInserter.insert(qrCodeObjList, myDoc, 0);//0 의미없음
 			}
 
+<<<<<<< HEAD
+				IndicesInserter.addIndices(myDoc, linkList);
+
+=======
+>>>>>>> 535240798cb743ba49dd2ba1f5d4a9788cff3c7c
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
@@ -175,21 +227,22 @@ public class MainViewController implements Initializable {
 			makeTempPDF();
 			showTempPDF();
 		});
-		btnPrev.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
+		btnPrev.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) -> {
 			imgDoc.setImage(image[--nowPage]);
-			if(nowPage == 0){
+			if (nowPage == 0) {
 				btnPrev.setVisible(false);
 			}
 			btnNext.setVisible(true);
 		});
-		btnNext.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
+		btnNext.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) -> {
 			imgDoc.setImage(image[++nowPage]);
-			if(nowPage+1 == image.length){
+			if (nowPage + 1 == image.length) {
 				btnNext.setVisible(false);
 			}
 			btnPrev.setVisible(true);
 		});
 	}
+
 	private void writeQRCode(ArrayList<ArrayList<QRcode>> qrCodeObjList) {
 		QRcodeWriter qrCodeWriter = new QRcodeWriter();
 		for (ArrayList<QRcode> qrCodeObjListPerPage : qrCodeObjList) {
@@ -203,16 +256,16 @@ public class MainViewController implements Initializable {
 		}
 	}
 
-	private ArrayList<ArrayList<QRcode>> makeQRCodeObjList(ArrayList<ArrayList<Link>> linkList, ArrayList<ArrayList<BitMatrix>> bitMatrixList) {
+	private ArrayList<ArrayList<QRcode>> makeQRCodeObjList(ArrayList<ArrayList<Link>> linkList,
+			ArrayList<ArrayList<BitMatrix>> bitMatrixList) {
 		ArrayList<ArrayList<QRcode>> qrCodeObjList = new ArrayList<>();
 
 		QRcode qrCodeObj = null;
 		for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
 			qrCodeObjList.add(new ArrayList<>());
-			for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder).size(); infoOrderPerOnePage++) {
-				qrCodeObj = new QRcode(
-						pageOrder,
-						infoOrderPerOnePage,
+			for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder)
+					.size(); infoOrderPerOnePage++) {
+				qrCodeObj = new QRcode(pageOrder, infoOrderPerOnePage,
 						bitMatrixList.get(pageOrder).get(infoOrderPerOnePage));
 				qrCodeObjList.get(pageOrder).add(qrCodeObj);
 				qrCodeObj.print();
@@ -222,19 +275,21 @@ public class MainViewController implements Initializable {
 		return qrCodeObjList;
 	}
 
-	private ArrayList<ArrayList<BitMatrix>> makeBitMatrixList(ArrayList<ArrayList<Link>> linkList ) {
+	private ArrayList<ArrayList<BitMatrix>> makeBitMatrixList(ArrayList<ArrayList<Link>> linkList) {
 		ArrayList<ArrayList<BitMatrix>> bitMatrixList = new ArrayList<ArrayList<BitMatrix>>();
 		DefaultBitMTgenerator bitMTgenerator = new DefaultBitMTgenerator();
 		BitMatrix bitmatrix = null;
 		for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
 			bitMatrixList.add(new ArrayList<BitMatrix>());
-			for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder).size(); infoOrderPerOnePage++) {
+			for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder)
+					.size(); infoOrderPerOnePage++) {
 				try {
 					bitmatrix = bitMTgenerator.generate(linkList.get(pageOrder).get(infoOrderPerOnePage), 100, 100);
 					bitMatrixList.get(pageOrder).add(bitmatrix);
 				} catch (WriterException e) {
-					System.out.println("BitMTgenerator::generate ERROR: " +
-							"[ " + linkList.get(pageOrder).get(infoOrderPerOnePage).getText() + " ]을 bit matrix로 변환할 수 없습니다.");
+					System.out.println("BitMTgenerator::generate ERROR: " + "[ "
+							+ linkList.get(pageOrder).get(infoOrderPerOnePage).getText()
+							+ " ]을 bit matrix로 변환할 수 없습니다.");
 				}
 			}
 		}
@@ -242,7 +297,7 @@ public class MainViewController implements Initializable {
 	}
 
 	private ArrayList<ArrayList<Link>> extractLink(MyDoc myDoc) {
-		LinkExtractor linkExtractor= null;
+		LinkExtractor linkExtractor = null;
 		try {
 			linkExtractor = new LinkExtractor(myDoc);
 			linkExtractor.readTexts();
@@ -258,9 +313,8 @@ public class MainViewController implements Initializable {
 
 	}
 
-
-	void resetView(){
-		if(myDocStream != null) {
+	void resetView() {
+		if (myDocStream != null) {
 			myDocStream.close();
 		}
 		nowPage = 0;
@@ -268,30 +322,29 @@ public class MainViewController implements Initializable {
 		imgDoc.setImage(null);
 	}
 
-
-	public void showTempPDF(){
-		if(image == null){
+	public void showTempPDF() {
+		if (image == null) {
 			labelDoc.setText("Please select the document file first.");
-			return ;
+			return;
 		}
 		nowPage = 0;
 		controlPane.setVisible(true);
 		imgDoc.setImage(image[nowPage]);
 	}
 
-	void makeTempPDF(){
+	void makeTempPDF() {
 		BufferedImage[] temp = myDoc.conversionPdf2Img();
 		image = new Image[temp.length];
-		for(int i = 0; i < temp.length; i++){
-			image[i] = SwingFXUtils.toFXImage(temp[i],null);
+		for (int i = 0; i < temp.length; i++) {
+			image[i] = SwingFXUtils.toFXImage(temp[i], null);
 		}
 	}
 
-	public void showSelectSaveDialog(FileStream myFileStream){
+	public void showSelectSaveDialog(FileStream myFileStream) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/selectSave_view.fxml"));
-			AnchorPane page = (AnchorPane)loader.load();
+			AnchorPane page = (AnchorPane) loader.load();
 			SelectSaveViewController controller = loader.getController();
 			Stage selectSaveStage = new Stage();
 			Scene scene = new Scene(page);
@@ -308,11 +361,11 @@ public class MainViewController implements Initializable {
 		}
 	}
 
-	public void showFileInputAlertDialog(){
+	public void showFileInputAlertDialog() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/showFileInputAlert_view.fxml"));
-			AnchorPane page = (AnchorPane)loader.load();
+			AnchorPane page = (AnchorPane) loader.load();
 			showFileInputAlertController controller = loader.getController();
 			Stage selectSaveStage = new Stage();
 			Scene scene = new Scene(page);
@@ -328,12 +381,11 @@ public class MainViewController implements Initializable {
 		}
 	}
 
-
-	public void showFileAlreadyOpenAlertDialog(){
+	public void showFileAlreadyOpenAlertDialog() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/showFileAlreadyOpenAlert_view.fxml"));
-			AnchorPane page = (AnchorPane)loader.load();
+			AnchorPane page = (AnchorPane) loader.load();
 			showFileAlreadyOpenAlertController controller = loader.getController();
 			Stage selectSaveStage = new Stage();
 			Scene scene = new Scene(page);
@@ -353,6 +405,10 @@ public class MainViewController implements Initializable {
 		this.arg = arg;
 		resetView();
 		setPDFDoc(new File(this.arg));
+<<<<<<< HEAD
+
+		ArrayList<ArrayList<Link>> linkList = extractLink(myDoc);
+=======
 		try {
 		LinkExtractor linkExtractor = new LinkExtractor(myDoc);
 		linkExtractor.readTexts();
@@ -360,12 +416,21 @@ public class MainViewController implements Initializable {
 		linkExtractor.extract();
 		linkExtractor.setPos();
 		ArrayList<ArrayList<Link>> linkList = linkExtractor.getInfoList();
+>>>>>>> 535240798cb743ba49dd2ba1f5d4a9788cff3c7c
 		ArrayList<ArrayList<BitMatrix>> bitMatrixList = makeBitMatrixList(linkList);
-		ArrayList<ArrayList<QRcode>> qrCodeObjList = makeQRCodeObjList(linkList,bitMatrixList);
+		ArrayList<ArrayList<QRcode>> qrCodeObjList = makeQRCodeObjList(linkList, bitMatrixList);
 		writeQRCode(qrCodeObjList);
 		FootNoteQRinserter footQrInseter=new FootNoteQRinserter();
 		BlankQRinserter blankQrInserter=new BlankQRinserter();
 		EndNoteQRinserter qrInserter = new EndNoteQRinserter();
+<<<<<<< HEAD
+		try {
+			qrInserter.insert(qrCodeObjList, myDoc, 0);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		IndicesInserter.addIndices(myDoc, linkList);
+=======
 
 		//boolean hasToInsertInEndNote=false;
 
@@ -400,6 +465,7 @@ public class MainViewController implements Initializable {
 			System.out.println(e.getMessage());
 		}
 
+>>>>>>> 535240798cb743ba49dd2ba1f5d4a9788cff3c7c
 		makeTempPDF();
 		showTempPDF();
 	}
