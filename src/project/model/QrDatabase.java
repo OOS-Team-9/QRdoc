@@ -6,10 +6,10 @@ import java.util.ArrayList;
  * QR-code 정보를 다 모아놓은 데이터베이스 클래스
  * (나중에 사용할 예정)
  */
-public class QRcodeDatabase {
-    public ArrayList<QRcode> qrList;
+public class QrDatabase {
+    public ArrayList<Qr> qrList;
 
-    public QRcodeDatabase() {
+    public QrDatabase() {
         qrList = new ArrayList<>();
     }
 
@@ -17,15 +17,15 @@ public class QRcodeDatabase {
         return qrList.size();
     }
 
-    public QRcode getQRcode(int index) {
+    public Qr getQRcode(int index) {
         return qrList.get(index);
     }
 
-    public void addQRcode(QRcode qr) {
+    public void addQRcode(Qr qr) {
         qrList.add(qr);
     }
 
-    public void addQRcode(QRcode qr, int index) {
+    public void addQRcode(Qr qr, int index) {
         qrList.add(index, qr);
     }
 
@@ -33,8 +33,8 @@ public class QRcodeDatabase {
         return qrList.isEmpty();
     }
 
-    public int searchQRcode(QRcode target) {
-        QRcode orignal=null;
+    public int searchQRcode(Qr target) {
+        Qr orignal=null;
         for (int i = 0; i < qrList.size(); i++) {
             orignal=qrList.get(i);
             if (orignal.getPageOrder() == target.getPageOrder()&&
@@ -49,7 +49,7 @@ public class QRcodeDatabase {
         qrList.remove(index);
     }
 
-    public ArrayList<QRcode> getQRList() {
+    public ArrayList<Qr> getQRList() {
         return qrList;
     }
 }

@@ -1,25 +1,22 @@
 package project.controller.qr_inserter;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import project.controller.FileStream;
 import project.model.MyDoc;
-import project.model.QRcode;
+import project.model.Qr;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * 미주로 QR-code 삽입하는 클래스
  */
-public class EndNoteQRinserter extends QRinserter{
+public class EndQrInserter implements QrInserter {
 
     /**
      * PDF 파일에 QR-code를 삽입한 다음,
@@ -27,7 +24,7 @@ public class EndNoteQRinserter extends QRinserter{
      * @param qrCodeList PDF파일에 삽입할 QR-code 모음
      * @throws IOException
      */
-    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc) throws IOException {
+    public void insert(ArrayList<ArrayList<Qr>> qrCodeList, MyDoc myDoc) throws IOException {
         //변수 선언 및 정의
         int i = 1, j, k = 1, l = 0, m = 0;          // i=QRcode파일 카운터,j=i%4,k=i/4
         int total = 0, tempTotal = 0, pageNum = 0;  // total=파일 수, pageNum=추가될 페이지수
@@ -43,9 +40,9 @@ public class EndNoteQRinserter extends QRinserter{
         doc = myDoc;
 
         //QR코드 전체 개수 구하기
-        ArrayList<QRcode> qrCodeListOneLine=new ArrayList<>();
-        for(ArrayList<QRcode> qrCodeListPerPage: qrCodeList){
-            for(QRcode qr: qrCodeListPerPage){
+        ArrayList<Qr> qrCodeListOneLine=new ArrayList<>();
+        for(ArrayList<Qr> qrCodeListPerPage: qrCodeList){
+            for(Qr qr: qrCodeListPerPage){
                 qrCodeListOneLine.add(qr);
             }
         }
@@ -105,7 +102,7 @@ public class EndNoteQRinserter extends QRinserter{
                         j = tempTotal - i + 1;
                     }
                     while (l < j) {
-                        tempImage = qrCodeListOneLine.get(l).getImage();
+                        tempImage = qrCodeListOneLine.get(l).getBufferedImage();
                         pdImage =  LosslessFactory.createFromImage(doc,tempImage);// Creating PDImageXObject object
                         contents.drawImage(pdImage, 140 * (l) + 48, ((((tempTotal - 1) % 20) / 4) + 1 - m) * 150 - 90);
                         i++;

@@ -1,7 +1,6 @@
 package project.view;
 
 import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,13 +18,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import project.Main;
 import project.controller.FileStream;
-import project.controller.bitmatrix_generator.DefaultBitMTgenerator;
+import project.controller.bitmatrix_generator.DefaultQrGenerator;
+import project.controller.bitmatrix_generator.QrGenerator;
 import project.controller.extractor.LinkExtractor;
-import project.controller.qr_inserter.EndNoteQRinserter;
+import project.controller.qr_inserter.EndQrInserter;
 import project.controller.qr_inserter.IndicesInserter;
-import project.controller.qrcode_writer.QRcodeWriter;
+import project.controller.qr_inserter.QrInserter;
 import project.model.MyDoc;
-import project.model.QRcode;
+import project.model.Qr;
 import project.model.information.Link;
 
 import java.awt.image.BufferedImage;
@@ -42,7 +42,7 @@ public class MainViewController implements Initializable {
 
 	MyDoc myDoc;
 	FileStream myDocStream;
-	ArrayList<ArrayList<QRcode>> qrCodeObjList = new ArrayList<>();
+	ArrayList<ArrayList<Qr>> qrList = new ArrayList<>();
 	
 	@FXML
 	private Button btnOpen;
@@ -129,53 +129,29 @@ public class MainViewController implements Initializable {
 				//
 				//  Default Bit Generator 작동!
 				//
-				DefaultBitMTgenerator bitMTgenerator = new DefaultBitMTgenerator();
-				ArrayList<ArrayList<BitMatrix>> bitMatrixList = new ArrayList<>();
-				BitMatrix bitmatrix = null;
+				QrGenerator qrGenerator = new DefaultQrGenerator();
+				Qr qr = null;
 				for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
-					bitMatrixList.add(new ArrayList<BitMatrix>());
+					qrList.add(new ArrayList<>());
 					for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder).size(); infoOrderPerOnePage++) {
 						try {
-							bitmatrix = bitMTgenerator.generate(linkList.get(pageOrder).get(infoOrderPerOnePage), 100, 100);
-							bitMatrixList.get(pageOrder).add(bitmatrix);
-						} catch (WriterException e) {
-							System.out.println("BitMTgenerator::generate ERROR: " +
-									"[ " + linkList.get(pageOrder).get(infoOrderPerOnePage).getText() + " ]을 bit matrix로 변환할 수 없습니다.");
-						}
-					}
-				}
-
-				//
-				//  QR-code 객체 리스트 생성!!
-				//
-
-				QRcode qrCodeObj = null;
-				for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
-					qrCodeObjList.add(new ArrayList<>());
-					for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder).size(); infoOrderPerOnePage++) {
-							qrCodeObj = new QRcode(
+							qr = qrGenerator.generate(linkList.get(pageOrder).get(infoOrderPerOnePage),
 									pageOrder,
 									infoOrderPerOnePage,
-									bitMatrixList.get(pageOrder).get(infoOrderPerOnePage));
-							qrCodeObjList.get(pageOrder).add(qrCodeObj);
-							qrCodeObj.print();
-					}
-				}
-
-				QRcodeWriter qrCodeWriter = new QRcodeWriter();
-				for (ArrayList<QRcode> qrCodeObjListPerPage : qrCodeObjList) {
-					for (QRcode obj : qrCodeObjListPerPage) {
-						try {
-							qrCodeWriter.writeQRcode(obj);
-						} catch (IOException e) {
-							System.out.println(e.getMessage());
+									100,
+									100);
+							qr.print();
+							qrList.get(pageOrder).add(qr);
+						} catch (WriterException e) {
+							System.out.println("QrGenerator::generate ERROR: " +
+									"[ " + linkList.get(pageOrder).get(infoOrderPerOnePage).getText() + " ]을 로 변환할 수 없습니다.");
 						}
 					}
 				}
 
-				EndNoteQRinserter qrInserter = new EndNoteQRinserter();
+				QrInserter qrInserter = new EndQrInserter();
 				try {
-					qrInserter.insert(qrCodeObjList,myDoc);
+					qrInserter.insert(qrList,myDoc);
 				} catch (IOException e) {
 					System.out.println(e.getMessage());
 				}

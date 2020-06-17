@@ -1,7 +1,7 @@
 package project.controller.bitmatrix_generator;
 
 import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
+import project.model.Qr;
 import project.model.information.Information;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * 모든 bit matrix generator의 공통 분모
  */
-public abstract class BitMTgenerator {
+public interface QrGenerator {
 
     /**
      * QR코드 bit matrix를 만드는 함수
@@ -21,5 +21,9 @@ public abstract class BitMTgenerator {
      * @throws WriterException
      * @throws IOException
      */
-    abstract BitMatrix generate(Information info, int qrWidth, int qrHeight)throws WriterException;
+    Qr generate(Information info,
+                      int pageOrder,
+                      int infoOrderPerPage,
+                      int qrWidth,
+                      int qrHeight) throws WriterException;
 }
