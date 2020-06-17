@@ -70,7 +70,7 @@ public class FootNoteQRinserter extends QRinserter {
     }
 
     @Override
-    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Page page)
+    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Integer[] availableBlank)
             throws IOException {
         // TODO Auto-generated method stub
 

@@ -21,20 +21,28 @@ import java.util.ArrayList;
  */
 public class BlankQRinserter extends QRinserter {
     @Override
-    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Page pPage)
+    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Integer[] availableBlank)
             throws IOException {
 
         int QRcount = 0;// QRcount=pageOrder이전 페이지까지의 qr코드 수
+        int k = 0, j = 0;
         int size = qrCodeList.get(pageOrder).size();
         String s;
         String text = "";
         BufferedImage tempImage;
 
-        for (int k = 0; k < pageOrder; k++) {
-            for (int j = 0; j < qrCodeList.get(k).size(); j++) {
+        for (k = 0; k < pageOrder; k++) {
+            for (int i = 0; i < qrCodeList.get(k).size(); i++) {
                 QRcount++;
             }
         }
+        for (j = 0; j < size; j++) {
+            if (!qrCodeList.get(pageOrder).get(j).getCheckInserted())
+                QRcount++;
+            else
+                break;
+        }
+
         // 문서 열기
         PDPage page = myDoc.getPage(pageOrder);
         PDImageXObject pdImage;
@@ -43,41 +51,16 @@ public class BlankQRinserter extends QRinserter {
             contents = new PDPageContentStream(myDoc, page, PDPageContentStream.AppendMode.APPEND, true);
             contents.beginText();
             contents.setFont(PDType1Font.TIMES_ROMAN, 15);
-            int max = pPage.getAvailableBlankForQRcode().size() - 1;
-            contents.newLineAtOffset(pPage.getAvailableBlankForQRcode().get(max)[0] * 50 - 25,
-                    pPage.getAvailableBlankForQRcode().get(max)[1] * 50 + 50);
-            for (int i = 0; i < size; i++) {
-                s = Integer.toString(i + QRcount + 1);
-                if (i + QRcount + 1 < 10)
-                    text += "  ";
-                text += s + ")";
-                contents.newLineAtOffset(
-                        (pPage.getAvailableBlankForQRcode().get(max - i - 1)[0]
-                                - pPage.getAvailableBlankForQRcode().get(max - i)[0]) * 50,
-                        (pPage.getAvailableBlankForQRcode().get(max - i - 1)[1]
-                                - pPage.getAvailableBlankForQRcode().get(max - i)[1]) * 50);
-                contents.showText(text);
-
-                text = "";
-                // System.out.println(text);
-            }
-
-            System.out.println("lalala" + max);
-            for (int i = 0; i < max; i++) {
-                System.out.println("x:" + pPage.getAvailableBlankForQRcode().get(i)[0]);
-                System.out.println("y:" + pPage.getAvailableBlankForQRcode().get(i)[1]);
-            }
-            System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqq");
-
+            contents.newLineAtOffset(25 + availableBlank[0], 90 + availableBlank[1]);
+            s = Integer.toString(QRcount + 1);
+            if (QRcount + 1 < 10)
+                text += "  ";
+            text += s + ")";
+            contents.showText(text);
             contents.endText();
-
-            for (int i = 0; i < size; i++) {
-                tempImage = qrCodeList.get(pageOrder).get(i).getImage();
-                pdImage = LosslessFactory.createFromImage(myDoc, tempImage);// Creating PDImageXObject
-                contents.drawImage(pdImage, pPage.getAvailableBlankForQRcode().get(max - i)[0] * 50,
-                        pPage.getAvailableBlankForQRcode().get(max - i)[1] * 50 - 40);// 여기서 각주 위치 조정 가능
-            }
-
+            tempImage = qrCodeList.get(pageOrder).get(j).getImage();
+            pdImage = LosslessFactory.createFromImage(myDoc, tempImage);// Creating PDImageXObject
+            contents.drawImage(pdImage, 45 + availableBlank[0], 20 + availableBlank[1]);// 여기서 각주 위치 조정 가능
             System.out.println("Image inserted");
             contents.close();
         } catch (

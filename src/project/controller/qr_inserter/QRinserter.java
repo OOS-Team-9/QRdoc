@@ -21,7 +21,7 @@ public abstract class QRinserter {
      * @throws IOException
      */
     public abstract void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder) throws IOException;
-    public abstract void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Page page)
+    public abstract void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Integer[] availableBlank)
             throws IOException;// 여백삽입
 }
 
