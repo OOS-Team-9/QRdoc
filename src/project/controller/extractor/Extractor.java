@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.lang.Math.abs;
+
 /**
  * 특정 패턴을 만족하는 문자열을 문서에서 추출하는 클래스
  */
@@ -177,8 +179,24 @@ abstract public class Extractor<T extends Information> {
         }
 
     }
+    public Integer[] findClosestBlank(Page page, Information info){
+        Integer[] blank=new Integer[2];
+        int x=(int)info.getxPos()/50;
+        int y=(int)info.getyPos()/50;
+        ArrayList<Integer[]> available=page.getAvailableBlankForQRcode();
+        int shortestDist=450;            //pdf 대각선길이의 제곱 보다 길게 초기화
+        for(int i=0;i<available.size();i++) {
+            int xDist=abs(available.get(i)[0]-x);
+            int yDist=abs(available.get(i)[1]-y);
 
-
+            if(shortestDist>(xDist*xDist)+(yDist*yDist)){
+                shortestDist=(xDist*xDist)+(yDist*yDist);
+                blank[0]=available.get(i)[0];
+                blank[1]=available.get(i)[1];
+            }
+        }
+        return blank;
+    }
 
 
     String replaceString(int num){
