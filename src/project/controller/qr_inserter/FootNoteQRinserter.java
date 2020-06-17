@@ -48,7 +48,7 @@ public class FootNoteQRinserter extends QRinserter {
                 System.out.println(text);
             }
             contents.setFont(PDType1Font.TIMES_ROMAN, 15);
-            contents.newLineAtOffset(25, 115);
+            contents.newLineAtOffset(25, 100);
             contents.showText(text);
             text = "";
             contents.endText();
@@ -57,7 +57,7 @@ public class FootNoteQRinserter extends QRinserter {
                 tempImage = qrCodeList.get(pageOrder).get(i).getImage();
                 qrCodeList.get(pageOrder).get(i).setCheckInserted(false);// 나중의 미주, 여백삽입시 false체크
                 pdImage = LosslessFactory.createFromImage(myDoc, tempImage);// Creating PDImageXObject
-                contents.drawImage(pdImage, 140 * i + 48, 25);// 여기서 각주 위치 조정 가능
+                contents.drawImage(pdImage, 140 * i + 48, 10);// 여기서 각주 위치 조정 가능
             }
 
             System.out.println("Image inserted");
