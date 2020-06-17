@@ -50,6 +50,9 @@ public class Page {
         temp[1]=y;
         availableBlankForQRcode.add(temp);
     }
+    public void resetAvailableBlankForQRcode(){
+        availableBlankForQRcode=new ArrayList<Integer[]>();
+    }
     public void print() {
         System.out.println("\n------[ " + order + " ]번째 Page------");
         System.out.println("text: " + text);
