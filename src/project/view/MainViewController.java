@@ -116,8 +116,9 @@ public class MainViewController implements Initializable {
 		});
 		btnConversion.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
 			ArrayList<ArrayList<Link>> linkList = extractLink(myDoc);
-			ArrayList<ArrayList<BitMatrix>> bitMatrixList = makeBitMatrixList(linkList);
-			ArrayList<ArrayList<QRcode>> qrCodeObjList = makeQRCodeObjList(linkList,bitMatrixList);
+      
+			ArrayList<ArrayList<BitMatrix>> bitMatrixList = makeBitMatrixList(linkList); // Default Bit Generator 작동!
+			ArrayList<ArrayList<QRcode>> qrCodeObjList = makeQRCodeObjList(linkList,bitMatrixList);	//  QR-code 객체 리스트 생성!!
 			writeQRCode(qrCodeObjList);
 			EndNoteQRinserter qrInserter = new EndNoteQRinserter();
 			try {
