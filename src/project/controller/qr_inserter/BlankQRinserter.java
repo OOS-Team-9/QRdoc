@@ -63,6 +63,7 @@ public class BlankQRinserter extends QRinserter {
             contents.drawImage(pdImage, 45 + availableBlank[0], 20 + availableBlank[1]);// 여기서 각주 위치 조정 가능
             System.out.println("Image inserted");
             contents.close();
+            qrCodeList.get(pageOrder).get(j).setCheckInserted(false);
         } catch (
 
         IOException e) {
