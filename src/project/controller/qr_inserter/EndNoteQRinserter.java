@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import project.model.MyDoc;
+import project.model.Page;
 import project.model.QRcode;
 
 import java.awt.image.BufferedImage;
@@ -23,7 +24,7 @@ public class EndNoteQRinserter extends QRinserter {
      * @param qrCodeList PDF파일에 삽입할 QR-code 모음
      * @throws IOException
      */
-    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int page) throws IOException {
+    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder) throws IOException {
         // 변수 선언 및 정의
         int i = 1, j, l = 0, m = 0, n = 0; // i=QRcode파일 카운터,n=QRcode 지수,l=한줄에 4개 카운트
         int total = 0, tempTotal = 0, pageNum = 0; // total=파일 수, pageNum=추가될 페이지수
@@ -123,6 +124,13 @@ public class EndNoteQRinserter extends QRinserter {
             }
             pageNum--;
         }
+
+    }
+
+    @Override
+    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Page page)
+            throws IOException {
+        // TODO Auto-generated method stub
 
     }
 }

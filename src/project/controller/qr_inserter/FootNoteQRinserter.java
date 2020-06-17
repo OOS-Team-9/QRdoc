@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import project.model.MyDoc;
+import project.model.Page;
 import project.model.QRcode;
 
 import java.awt.image.BufferedImage;
@@ -34,8 +35,8 @@ public class FootNoteQRinserter extends QRinserter {
         PDPage page = myDoc.getPage(pageOrder);
         PDImageXObject pdImage;
         PDPageContentStream contents;
-        if (qrCodeList.get(pageOrder).size() < 4)
-            size = qrCodeList.get(pageOrder).size();
+        if (qrCodeList.get(pageOrder).size() < 4) // mainviewcontroller에서 처리하니 필요없음 test용
+            size = qrCodeList.get(pageOrder).size();//
         try {
             contents = new PDPageContentStream(myDoc, page, PDPageContentStream.AppendMode.APPEND, true);
             contents.beginText();
@@ -54,6 +55,7 @@ public class FootNoteQRinserter extends QRinserter {
 
             for (int i = 0; i < size; i++) {
                 tempImage = qrCodeList.get(pageOrder).get(i).getImage();
+                qrCodeList.get(pageOrder).get(i).setCheckInserted(false);// 나중의 미주, 여백삽입시 false체크
                 pdImage = LosslessFactory.createFromImage(myDoc, tempImage);// Creating PDImageXObject
                 contents.drawImage(pdImage, 140 * i + 48, 25);// 여기서 각주 위치 조정 가능
             }
@@ -65,6 +67,13 @@ public class FootNoteQRinserter extends QRinserter {
         IOException e) {
             throw new IOException("EndNoteQRinserter::insert ERROR: QR 코드를 삽입할 수 없습니다.");
         }
+    }
+
+    @Override
+    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Page page)
+            throws IOException {
+        // TODO Auto-generated method stub
+
     }
 
 }
