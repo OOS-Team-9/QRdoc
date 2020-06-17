@@ -51,7 +51,7 @@ public class BlankQRinserter extends QRinserter {
             contents = new PDPageContentStream(myDoc, page, PDPageContentStream.AppendMode.APPEND, true);
             contents.beginText();
             contents.setFont(PDType1Font.TIMES_ROMAN, 15);
-            contents.newLineAtOffset(25 + availableBlank[0], 90 + availableBlank[1]);
+            contents.newLineAtOffset(25 + 50*availableBlank[0], 90 + 50*availableBlank[1]);
             s = Integer.toString(QRcount + 1);
             if (QRcount + 1 < 10)
                 text += "  ";
@@ -60,7 +60,7 @@ public class BlankQRinserter extends QRinserter {
             contents.endText();
             tempImage = qrCodeList.get(pageOrder).get(j).getImage();
             pdImage = LosslessFactory.createFromImage(myDoc, tempImage);// Creating PDImageXObject
-            contents.drawImage(pdImage, 45 + availableBlank[0], 20 + availableBlank[1]);// 여기서 각주 위치 조정 가능
+            contents.drawImage(pdImage, 45 + 50*availableBlank[0], 20 + 50*availableBlank[1]);// 여기서 각주 위치 조정 가능
             System.out.println("Image inserted");
             contents.close();
             qrCodeList.get(pageOrder).get(j).setCheckInserted(false);
