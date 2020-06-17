@@ -130,6 +130,7 @@ public class MainViewController implements Initializable {
 			ArrayList<ArrayList<BitMatrix>> bitMatrixList = makeBitMatrixList(linkList); // Default Bit Generator 작동!
 			ArrayList<ArrayList<QRcode>> qrCodeObjList = makeQRCodeObjList(linkList,bitMatrixList);	//  QR-code 객체 리스트 생성!!
 			writeQRCode(qrCodeObjList);
+
 			FootNoteQRinserter footQrInseter=new FootNoteQRinserter();
 			BlankQRinserter blankQrInserter=new BlankQRinserter();
 			EndNoteQRinserter qrInserter = new EndNoteQRinserter();
@@ -166,6 +167,7 @@ public class MainViewController implements Initializable {
 				}
 				qrInserter.insert(qrCodeObjList, myDoc, 0);//0 의미없음
 			}
+
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
@@ -347,7 +349,7 @@ public class MainViewController implements Initializable {
 		}
 	}
 
-	public void setParameter(String arg) {
+	public void setParameter(String arg) throws IOException {
 		this.arg = arg;
 		resetView();
 		setPDFDoc(new File(this.arg));
@@ -364,6 +366,7 @@ public class MainViewController implements Initializable {
 		FootNoteQRinserter footQrInseter=new FootNoteQRinserter();
 		BlankQRinserter blankQrInserter=new BlankQRinserter();
 		EndNoteQRinserter qrInserter = new EndNoteQRinserter();
+
 		//boolean hasToInsertInEndNote=false;
 
 		for(int pageOrder=0;pageOrder<linkList.size();pageOrder++){
@@ -392,6 +395,7 @@ public class MainViewController implements Initializable {
 
 			qrInserter.insert(qrCodeObjList, myDoc, 0);//0 의미없음
 			IndicesInserter.addIndices(myDoc,linkList);
+
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
