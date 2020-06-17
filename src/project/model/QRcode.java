@@ -13,6 +13,7 @@ public class QRcode {
     private int infoOrderInOnePage;     //페이지 안에서 정보 순서
     private BitMatrix bitmatrix;        //bit matrix
     private BufferedImage image;
+    private boolean checkInserted = true;
     //private MyPath path;                //QR-code 이미지 파일 저장 경로
 
     public QRcode(int pageOrder,
@@ -67,6 +68,13 @@ public class QRcode {
         this.bitmatrix = bitmatrix;
     }
 
+    public boolean getCheckInserted() {
+        return checkInserted;
+    }
+
+    public void setCheckInserted(boolean checkInserted) {
+        this.checkInserted = checkInserted;
+    }
 
     public void print() {
         System.out.println("\n------[ " + pageOrder + " - " + infoOrderInOnePage + " ]번째 QRcode 객체------");

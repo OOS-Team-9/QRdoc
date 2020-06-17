@@ -121,6 +121,7 @@ public class MainViewController implements Initializable {
 			try {
 				LinkExtractor linkExtractor=new LinkExtractor(myDoc);
 				linkExtractor.readTexts();
+				linkExtractor.findBlankForQRcode();
 				linkExtractor.extract();
 				linkExtractor.setPos();
 				ArrayList<ArrayList<Link>> linkList = linkExtractor.getInfoList();
@@ -174,7 +175,7 @@ public class MainViewController implements Initializable {
 
 				EndNoteQRinserter qrInserter = new EndNoteQRinserter();
 				try {
-					qrInserter.insert(qrCodeObjList,myDoc);
+					qrInserter.insert(qrCodeObjList,myDoc,0);//0 의미없음
 				} catch (IOException e) {
 					System.out.println(e.getMessage());
 				}
