@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.lang.Math.abs;
+
 /**
  * 특정 패턴을 만족하는 문자열을 문서에서 추출하는 클래스
  */
@@ -60,7 +62,9 @@ abstract public class Extractor<T extends Information> {
     public ArrayList<ArrayList<T>> getInfoList() {
         return this.infoList;
     }
-
+    public ArrayList<Page> getPageList(){
+        return pageList;
+    }
     /**
      * 페이지 단위로 문서를 읽고 이를 Page객체에 저장하는 함수
      * @throws IOException
@@ -163,8 +167,10 @@ abstract public class Extractor<T extends Information> {
             Page p=pageList.get(i);
             for (int x = 0; x < 11; x++) {
                 for (int y = 0; y < 16; y++) {
-                    if (p.isThereBlankAt(x,y)&&p.isThereBlankAt(x+1,y)&&p.isThereBlankAt(x,y+1)&&p.isThereBlankAt(x+1,y+1))
-                        p.addAvailableBlankForQRcode(x,y);
+                    if (p.isThereBlankAt(x,y)&&p.isThereBlankAt(x+1,y)&&p.isThereBlankAt(x,y+1)&&p.isThereBlankAt(x+1,y+1)) {
+                        p.addAvailableBlankForQRcode(x, y);
+                        System.out.println(x+","+y);
+                    }
                 }
             }
         }
@@ -177,8 +183,27 @@ abstract public class Extractor<T extends Information> {
         }
 
     }
+    public Integer[] findClosestBlank(Page page, Information info){
+        Integer[] blank=new Integer[2];
+        int x=(int)info.getxPos()/50;
+        int y=(int)info.getyPos()/50;
+        ArrayList<Integer[]> available=page.getAvailableBlankForQRcode();
 
+        int shortestDist=450;            //pdf 대각선길이의 제곱 보다 길게 초기화
+        for(int i=0;i<available.size();i++) {
+            int xDist=abs(available.get(i)[0]-x);
+            int yDist=abs(available.get(i)[1]-y);
 
+            if(shortestDist>(xDist*xDist)+(yDist*yDist)){
+                shortestDist=(xDist*xDist)+(yDist*yDist);
+                blank[0]=available.get(i)[0];
+                blank[1]=available.get(i)[1];
+            }
+            //test
+            System.out.println("shortestDist:"+shortestDist+" xDist:"+xDist+" yDist:"+yDist+" 여백좌표:"+blank[0]+","+blank[1]+"링크좌표"+x+","+y);
+        }
+        return blank;
+    }
 
 
     String replaceString(int num){
