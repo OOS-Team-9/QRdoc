@@ -120,9 +120,12 @@ public class MainViewController implements Initializable {
 			ArrayList<ArrayList<BitMatrix>> bitMatrixList = makeBitMatrixList(linkList); // Default Bit Generator 작동!
 			ArrayList<ArrayList<QRcode>> qrCodeObjList = makeQRCodeObjList(linkList,bitMatrixList);	//  QR-code 객체 리스트 생성!!
 			writeQRCode(qrCodeObjList);
+
+		
+
 			EndNoteQRinserter qrInserter = new EndNoteQRinserter();
 			try {
-				qrInserter.insert(qrCodeObjList,myDoc);
+				qrInserter.insert(qrCodeObjList,myDoc,0);
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
@@ -318,7 +321,7 @@ public class MainViewController implements Initializable {
 		writeQRCode(qrCodeObjList);
 		EndNoteQRinserter qrInserter = new EndNoteQRinserter();
 		try {
-			qrInserter.insert(qrCodeObjList,myDoc);
+			qrInserter.insert(qrCodeObjList,myDoc,0);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
