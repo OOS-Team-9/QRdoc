@@ -26,12 +26,13 @@ public class EndNoteQRinserter extends QRinserter {
      */
     public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder) throws IOException {
         // 변수 선언 및 정의
-        int i = 1, j, l = 0, m = 0, n = 0; // i=QRcode파일 카운터,n=QRcode 지수,l=한줄에 4개 카운트
+        int i = 1, j, l = 0, m = 0, n = 0, t = 0, p = 0; // i=QRcode파일 카운터,n=QRcode 지수,l=한줄에 4개 카운트,t=qrCodeList의 페이지내
+                                                         // 링크 수,p=qrCodeList의 페이지 수
         int total = 0, tempTotal = 0, pageNum = 0; // total=파일 수, pageNum=추가될 페이지수
         String s;
         String text = "";
         BufferedImage tempImage;
-
+        boolean loop = false;
         // 문서 열기
         MyDoc doc = null;
         doc = myDoc;
@@ -73,12 +74,27 @@ public class EndNoteQRinserter extends QRinserter {
                     }
                     while (l < j) {
                         n++;
-                        while (!qrCodeListOneLine.get(n - 1).getCheckInserted())
-                            n++;
+                        for (int x = p; x < qrCodeList.size(); x++) {
+                            for (int y = t; y < qrCodeList.get(x).size(); y++) {
+                                if (!qrCodeList.get(x).get(y).getCheckInserted())
+                                    n++;
+                                else {
+                                    t = y;
+                                    p = x;
+                                    loop = true;
+                                    continue;
+                                }
+                            }
+                            if (loop) {
+                                loop = false;
+                                continue;
+                            }
+                            t = 0;
+                        }
                         s = Integer.toString(n);
                         if (i < 10)
-                            text += "  ";
-                        text += s + ")                                ";
+                            text += " ";
+                        text += s + ")                               ";
                         System.out.println(text);
                         i++;
                         l++;
