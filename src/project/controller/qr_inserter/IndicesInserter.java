@@ -33,7 +33,6 @@ public class IndicesInserter {
                     contentStream.beginText();
                     // Setting the font to the Content stream
                     contentStream.setFont(PDType1Font.TIMES_ROMAN, infoList.get(i).get(j).getFontSize() / 12 + 6);
-
                     // Setting the position for the line
                     contentStream.newLineAtOffset(infoList.get(i).get(j).getxPos(),
                             (infoList.get(i).get(j).getyPos()) + infoList.get(i).get(j).getFontSize() / 12 + 1);
