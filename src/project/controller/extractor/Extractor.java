@@ -135,7 +135,7 @@ abstract public class Extractor<T extends Information> {
 
 
     }
-    private void findBlank() throws IOException {
+    public void findBlank() throws IOException {
         for (int i = 0; i < pageList.size(); i++) {
             for (int j = 0; j < listTP.get(i).size(); j++) {
                 TextPosition target = listTP.get(i).get(j);
@@ -160,11 +160,17 @@ abstract public class Extractor<T extends Information> {
             }
             pageIndex++;
         }
+        for(int y=16;y>=0;y--){
+            for(int x=0;x<12;x++){
+                System.out.print(pageList.get(0).isThereBlankAt(x,y)+" ");
+            }
+            System.out.println(" ");
+        }
     }
     public void findBlankForQRcode() throws IOException {
-        findBlank();
         for(int i=0;i<pageList.size();i++) {
             Page p=pageList.get(i);
+            p.resetAvailableBlankForQRcode();
             for (int x = 0; x < 11; x++) {
                 for (int y = 0; y < 16; y++) {
                     if (p.isThereBlankAt(x,y)&&p.isThereBlankAt(x+1,y)&&p.isThereBlankAt(x,y+1)&&p.isThereBlankAt(x+1,y+1)) {
@@ -175,12 +181,7 @@ abstract public class Extractor<T extends Information> {
             }
         }
         //test
-        for(int y=16;y>=0;y--){
-            for(int x=0;x<12;x++){
-               System.out.print(pageList.get(0).isThereBlankAt(x,y)+" ");
-            }
-            System.out.println(" ");
-        }
+
 
     }
     public Integer[] findClosestBlank(Page page, Information info){
@@ -190,6 +191,7 @@ abstract public class Extractor<T extends Information> {
         ArrayList<Integer[]> available=page.getAvailableBlankForQRcode();
 
         int shortestDist=450;            //pdf 대각선길이의 제곱 보다 길게 초기화
+        System.out.println("큐알코드 삽입위치 개수"+available.size());
         for(int i=0;i<available.size();i++) {
             int xDist=abs(available.get(i)[0]-x);
             int yDist=abs(available.get(i)[1]-y);
@@ -200,7 +202,7 @@ abstract public class Extractor<T extends Information> {
                 blank[1]=available.get(i)[1];
             }
             //test
-            System.out.println("shortestDist:"+shortestDist+" xDist:"+xDist+" yDist:"+yDist+" 여백좌표:"+blank[0]+","+blank[1]+"링크좌표"+x+","+y);
+            //System.out.println("shortestDist:"+shortestDist+" xDist:"+xDist+" yDist:"+yDist+" 여백좌표:"+blank[0]+","+blank[1]+"링크좌표"+x+","+y);
         }
         return blank;
     }
