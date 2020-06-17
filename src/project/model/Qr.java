@@ -9,23 +9,23 @@ import java.awt.image.BufferedImage;
  */
 public class Qr {
 
-    private int pageOrder;              //페이지 순서
-    private int infoOrderInOnePage;     //페이지 안에서 정보 순서
-    private BitMatrix bitmatrix;        //bit matrix
-    private BufferedImage bufferedImage;
+    private int pageOrder;                  //페이지 순서
+    private int infoOrderInOnePage;         //페이지 안에서 정보 순서
+    private BufferedImage bufferedImage;    //qr의 buffer image
 
-
-
-    public Qr(int pageOrder, int infoOrderInOnePage, BitMatrix bitmatrix, BufferedImage bufferedImage) {
+    /**
+     * 생성자
+     * @param pageOrder             페이지 순서
+     * @param infoOrderInOnePage    페이지 안에서 정보 순서
+     * @param bufferedImage         qr의 buffer image
+     */
+    public Qr(int pageOrder, int infoOrderInOnePage, BufferedImage bufferedImage) {
         this.pageOrder = pageOrder;
         this.infoOrderInOnePage = infoOrderInOnePage;
-        this.bitmatrix = bitmatrix;
         this.bufferedImage = bufferedImage;
     }
 
-    public Qr() {
-    }
-
+    //getter
     public BufferedImage getBufferedImage() {
         return bufferedImage;
     }
@@ -36,15 +36,5 @@ public class Qr {
 
     public int getInfoOrderInOnePage() {
         return infoOrderInOnePage;
-    }
-
-    public BitMatrix getBitmatrix() {
-        return bitmatrix;
-    }
-
-    public void print() {
-        System.out.println("\n------[ " + pageOrder + " - " + infoOrderInOnePage + " ]번째 QRcode 객체------");
-        System.out.println("pageOrder = " + pageOrder);
-        System.out.println("infoOrderInOnePage = " + infoOrderInOnePage);
     }
 }

@@ -1,4 +1,4 @@
-package project.controller;
+package project.controller.url;
 
 import net.sf.image4j.codec.ico.ICODecoder;
 import project.model.information.Link;
@@ -17,21 +17,21 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * url에서 favicon의 buffer image을 추출하는 클래스
+ */
 public class FaviconGetter {
 
-    public FaviconGetter() {
-    }
-
-    public static URL getFaviconUrl(final URL url) throws MalformedURLException {
-        return new URL(url.getProtocol() + "://" + url.getHost()+"/favicon.ico");
-    }
-
+    /**
+     * url에서 favion의 buffer image를 추출하는 메소드
+     * @param url   url
+     * @return      favicon의 buffer image
+     * @throws IOException  favicon의 buffer image를 읽을 떄 발생할 수 있는 예외
+     */
     public static BufferedImage getFavicon(URL url) throws IOException {
-        URL faviconURL=getFaviconUrl(url);
+        URL faviconURL=new URL(url.getProtocol() + "://" + url.getHost()+"/favicon.ico");
         List<BufferedImage> images = ICODecoder.read(faviconURL.openStream());
         BufferedImage image = images != null ? (images.size() > 0 ? images.get(0) : null) : null;
-        //File outputfile = new File("saved.png");
-        //ImageIO.write(image, "png", outputfile);
         return image;
     }
 }

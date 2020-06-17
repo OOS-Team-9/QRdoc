@@ -18,8 +18,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import project.Main;
 import project.controller.FileStream;
-import project.controller.bitmatrix_generator.DefaultQrGenerator;
-import project.controller.bitmatrix_generator.QrGenerator;
+import project.controller.qr_buffimage_generator.QrBuffImageGenerator;
+import project.controller.qr_buffimage_generator.VisualQrBuffImageGenerator;
 import project.controller.extractor.LinkExtractor;
 import project.controller.qr_inserter.EndQrInserter;
 import project.controller.qr_inserter.IndicesInserter;
@@ -127,21 +127,17 @@ public class MainViewController implements Initializable {
 				ArrayList<ArrayList<Link>> linkList = linkExtractor.getInfoList();
 
 				//
-				//  Default Bit Generator 작동!
+				//  QR code 생성!
 				//
-				QrGenerator qrGenerator = new DefaultQrGenerator();
-				Qr qr = null;
+				QrBuffImageGenerator qrBuffImageGenerator = new VisualQrBuffImageGenerator();
 				for (int pageOrder = 0; pageOrder < linkList.size(); pageOrder++) {
 					qrList.add(new ArrayList<>());
 					for (int infoOrderPerOnePage = 0; infoOrderPerOnePage < linkList.get(pageOrder).size(); infoOrderPerOnePage++) {
 						try {
-							qr = qrGenerator.generate(linkList.get(pageOrder).get(infoOrderPerOnePage),
-									pageOrder,
-									infoOrderPerOnePage,
+							BufferedImage qrBuffImage = qrBuffImageGenerator.generate(linkList.get(pageOrder).get(infoOrderPerOnePage),
 									100,
 									100);
-							qr.print();
-							qrList.get(pageOrder).add(qr);
+							qrList.get(pageOrder).add(new Qr(pageOrder,infoOrderPerOnePage,qrBuffImage));
 						} catch (WriterException e) {
 							System.out.println("QrGenerator::generate ERROR: " +
 									"[ " + linkList.get(pageOrder).get(infoOrderPerOnePage).getText() + " ]을 로 변환할 수 없습니다.");
