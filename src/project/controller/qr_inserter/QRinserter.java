@@ -2,9 +2,9 @@ package project.controller.qr_inserter;
 
 import project.controller.FileStream;
 import project.model.MyDoc;
+import project.model.Page;
 import project.model.QRcode;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -20,6 +20,8 @@ public abstract class QRinserter {
      * @param qrCodeList PDF파일에 삽입할 QR-code 모음
      * @throws IOException
      */
-    public abstract void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc) throws IOException;
+    public abstract void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder) throws IOException;
+    public abstract void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Integer[] availableBlank)
+            throws IOException;// 여백삽입
 }
 
