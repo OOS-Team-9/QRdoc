@@ -78,6 +78,8 @@ public class MainViewController implements Initializable {
 		this.primaryStage = primaryStage;
 	}
 
+	public ImageView getImgDoc(){ return imgDoc;}
+	public GridPane getControlPane(){ return controlPane;}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		btnOpen.addEventFilter(MouseEvent.MOUSE_CLICKED, (MouseEvent) ->{
@@ -135,11 +137,12 @@ public class MainViewController implements Initializable {
 			BlankQRinserter blankQrInserter=new BlankQRinserter();
 			EndNoteQRinserter qrInserter = new EndNoteQRinserter();
 
+			boolean hasToInsertInEndNote=false;
 
 			for(int pageOrder=0;pageOrder<linkList.size();pageOrder++){
 				Page page=linkExtractor.getPageList().get(pageOrder);
 				ArrayList<Integer[]> allBlank =page.getAvailableBlankForQRcode();
-				boolean hasToInsertInEndNote=false;
+
 				int footBlankCount=0;
 
 				for(int j=0;j<allBlank.size();j++) {
@@ -169,11 +172,11 @@ public class MainViewController implements Initializable {
 				else{
 					hasToInsertInEndNote=true;
 				}
-				if(hasToInsertInEndNote) {
-					System.out.println("*****미주"+pageOrder);
-					qrInserter.insert(qrCodeObjList, myDoc, 0);//0 의미없음
 
-				}
+			}
+			if(hasToInsertInEndNote) {
+					//System.out.println("*****미주"+pageOrder);
+					qrInserter.insert(qrCodeObjList, myDoc, 0);//0 의미없음
 			}
 
 			} catch (IOException e) {
