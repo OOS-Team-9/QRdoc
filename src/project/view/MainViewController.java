@@ -365,47 +365,63 @@ public class MainViewController implements Initializable {
 		resetView();
 		setPDFDoc(new File(this.arg));
 		try {
-		LinkExtractor linkExtractor = new LinkExtractor(myDoc);
-		linkExtractor.readTexts();
-		linkExtractor.findBlankForQRcode();
-		linkExtractor.extract();
-		linkExtractor.setPos();
-		ArrayList<ArrayList<Link>> linkList = linkExtractor.getInfoList();
-		ArrayList<ArrayList<BitMatrix>> bitMatrixList = makeBitMatrixList(linkList);
-		ArrayList<ArrayList<QRcode>> qrCodeObjList = makeQRCodeObjList(linkList,bitMatrixList);
-		writeQRCode(qrCodeObjList);
-		FootNoteQRinserter footQrInseter=new FootNoteQRinserter();
-		BlankQRinserter blankQrInserter=new BlankQRinserter();
-		EndNoteQRinserter qrInserter = new EndNoteQRinserter();
+			LinkExtractor linkExtractor = new LinkExtractor(myDoc);
+			linkExtractor.readTexts();
+			linkExtractor.extract();
+			linkExtractor.setPos();
+			linkExtractor.findBlank();
+			linkExtractor.findBlankForQRcode();
+			ArrayList<ArrayList<Link>> linkList = linkExtractor.getInfoList();
 
-		//boolean hasToInsertInEndNote=false;
+			ArrayList<ArrayList<BitMatrix>> bitMatrixList = makeBitMatrixList(linkList); // Default Bit Generator 작동!
+			ArrayList<ArrayList<QRcode>> qrCodeObjList = makeQRCodeObjList(linkList,bitMatrixList);	//  QR-code 객체 리스트 생성!!
+			writeQRCode(qrCodeObjList);
 
-		for(int pageOrder=0;pageOrder<linkList.size();pageOrder++){
-			Page page=linkExtractor.getPageList().get(pageOrder);
-			ArrayList<Integer[]> allBlank =page.getAvailableBlankForQRcode();
-			int footBlankCount=0;
+			FootNoteQRinserter footQrInseter=new FootNoteQRinserter();
+			BlankQRinserter blankQrInserter=new BlankQRinserter();
+			EndNoteQRinserter qrInserter = new EndNoteQRinserter();
 
-			for(int j=0;j<allBlank.size();j++) {
-				if (allBlank.get(j)[1]==0)
-					footBlankCount++;
-			}
-			System.out.println("아래여백개수:" +footBlankCount);
-			if (footBlankCount==11) {                            //페이지 아래 간격이 충분해서 각주삽입
-				System.out.println("footnote Insert");
-				footQrInseter.insert(qrCodeObjList, myDoc, pageOrder);
-			}
-			else if (allBlank.size()>=linkList.get(pageOrder).size()*4) {        //큐알코드 한 개당 4개의 큐알코드 여백이 사라지므로							//페이지 아래 공간 부족해서 여백삽입
-				System.out.println("blank Insert");
-				for (int infoOrder = 0; infoOrder < linkList.get(pageOrder).size(); infoOrder++) {
-					Integer[] blankPos=linkExtractor.findClosestBlank(page, linkList.get(pageOrder).get(infoOrder));
-					blankQrInserter.insert(qrCodeObjList, myDoc, pageOrder,blankPos);            //삽입가능한 좌표가 큐알코드 개수의 4배이상일 때 여백삽입
+			boolean hasToInsertInEndNote=false;
 
+			for(int pageOrder=0;pageOrder<linkList.size();pageOrder++){
+				Page page=linkExtractor.getPageList().get(pageOrder);
+				ArrayList<Integer[]> allBlank =page.getAvailableBlankForQRcode();
+
+				int footBlankCount=0;
+
+				for(int j=0;j<allBlank.size();j++) {
+					if (allBlank.get(j)[1]==0)
+						footBlankCount++;
 				}
-			}
-		}
+				System.out.println("아래여백개수:"+footBlankCount);
+				if (footBlankCount==11) {                            //페이지 아래 간격이 충분해서 각주삽입
+					System.out.println("****footnote Insert"+pageOrder);
+					footQrInseter.insert(qrCodeObjList, myDoc, pageOrder);
+				}
+				else if (allBlank.size()>=linkList.get(pageOrder).size()*9) {        //큐알코드 한 개당 4개의 큐알코드 여백이 사라지므로
+					System.out.println("****blank Insert"+pageOrder);
+					for (int infoOrder = 0; infoOrder < linkList.get(pageOrder).size(); infoOrder++) {
+						Integer[] blankPos=linkExtractor.findClosestBlank(page, linkList.get(pageOrder).get(infoOrder));
+						System.out.println("선택된 여백 위치:"+blankPos[0]+","+blankPos[1]);
+						System.out.println("----------------------------------");
+						blankQrInserter.insert(qrCodeObjList, myDoc, pageOrder,blankPos);
 
-			qrInserter.insert(qrCodeObjList, myDoc, 0);//0 의미없음
-			IndicesInserter.addIndices(myDoc,linkList);
+						page.fillBlank(blankPos[0],blankPos[1]);
+						page.fillBlank(blankPos[0]+1,blankPos[1]);
+						page.fillBlank(blankPos[0],blankPos[1]+1);
+						page.fillBlank(blankPos[0]+1,blankPos[1]+1);
+						linkExtractor.findBlankForQRcode();
+					}
+				}
+				else{
+					hasToInsertInEndNote=true;
+				}
+
+			}
+			if(hasToInsertInEndNote) {
+				//System.out.println("*****미주"+pageOrder);
+				qrInserter.insert(qrCodeObjList, myDoc, 0);//0 의미없음
+			}
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

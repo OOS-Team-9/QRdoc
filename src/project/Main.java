@@ -40,8 +40,7 @@ public class Main extends Application {
 			 ImageView img = controller.getImgDoc();
 			 img.fitWidthProperty().bind(root.widthProperty());
 			 img.fitHeightProperty().bind(root.heightProperty().multiply(0.95).subtract(controller.getControlPane().heightProperty()));
-
-			Scene scene = new Scene(root);
+			Scene scene = new Scene(root,646,600);
             primaryStage.setScene(scene);
             primaryStage.show();	
 		} catch (IOException e) {
