@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="869.0" y="912.0">toolbarButtonGraphics</node>
+    <node x="1387.0" y="1063.1276041666667">java</node>
+    <node x="522.7069444444446" y="701.0">project.view</node>
+    <node x="1202.6111111111113" y="58.5">project.controller.url.DomainNameGetter.genericTopLevelDomain</node>
+    <node x="1017.0" y="1063.1276041666667">javafx</node>
+    <node x="0.0" y="1063.1276041666667">kobaltBuild</node>
+    <node x="1049.6225694444445" y="508.0">project.controller.qr_buffimage_generator</node>
+    <node x="639.0" y="1063.1276041666667">images</node>
+    <node x="1418.6111111111113" y="255.5">project.controller.url.FaviconGetter</node>
+    <node x="434.0" y="1063.1276041666667">META-INF</node>
+    <node x="828.0" y="1063.1276041666667">groovy</node>
+    <node x="357.0" y="925.1276041666666">bsh</node>
+    <node x="40.0" y="925.1276041666666">groovyjarjarantlr</node>
+    <node x="383.5302083333334" y="231.5">project.model.Page</node>
+    <node x="229.0" y="1063.1276041666667">netscape</node>
+    <node x="252.52083333333326" y="0.0">project.model.information.Information</node>
+    <node x="495.0" y="1161.1276041666667">sun</node>
+    <node x="161.13819444444437" y="508.0">project.controller.qr_inserter</node>
+    <node x="1222.6111111111113" y="255.5">project.controller.url.DomainNameGetter</node>
+    <node x="660.0" y="1161.1276041666667">jdk</node>
+    <node x="212.0" y="231.5">project.model.information.Link</node>
+    <node x="731.1715277777777" y="255.5">project.model.MyDoc</node>
+    <node x="0.0" y="220.0">project.model.Qr</node>
+    <node x="0.0" y="1161.1276041666667">com</node>
+    <node x="1178.0" y="912.0">groovyjarjarasm</node>
+    <node x="1206.0" y="1063.1276041666667">javax</node>
+    <node x="825.0" y="1161.1276041666667">net</node>
+    <node x="658.1850694444444" y="484.0">project.controller.FileStream</node>
+    <node x="851.2916666666666" y="507.0">project.model.MyPDFParser</node>
+    <node x="568.0402777777779" y="814.0">project.Main</node>
+    <node x="552.0" y="920.7109375">groovyjarjarcommonscli</node>
+    <node x="405.13819444444437" y="508.0">project.controller.extractor</node>
+    <node x="986.6111111111113" y="255.5">project.controller.buffimage.BufferedImageModifier</node>
+    <node x="165.0" y="1161.1276041666667">org</node>
+    <node x="330.0" y="1161.1276041666667">src</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="project.controller.qr_inserter" target="project.model.information.Link">
+      <point x="0.0" y="-26.5" />
+      <point x="253.13819444444437" y="464.0" />
+      <point x="249.125" y="464.0" />
+      <point x="-12.375" y="50.5" />
+    </edge>
+    <edge source="project.view" target="project.controller.qr_inserter">
+      <point x="-25.59999999999991" y="-26.5" />
+      <point x="561.1069444444447" y="641.0" />
+      <point x="299.13819444444437" y="641.0" />
+      <point x="46.0" y="26.5" />
+    </edge>
+    <edge source="project.controller.qr_buffimage_generator" target="project.controller.buffimage.BufferedImageModifier">
+      <point x="-34.0" y="-26.5" />
+      <point x="1151.6225694444445" y="464.0" />
+      <point x="1094.6111111111113" y="464.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="project.Main" target="project.view">
+      <point x="-20.0" y="-26.5" />
+      <point x="588.0402777777779" y="794.0" />
+      <point x="586.7069444444446" y="794.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="project.view" target="project.controller.FileStream">
+      <point x="17.066666666666606" y="-26.5" />
+      <point x="603.7736111111112" y="631.0" />
+      <point x="679.5184027777776" y="631.0" />
+      <point x="-42.66666666666674" y="50.5" />
+    </edge>
+    <edge source="project.model.MyPDFParser" target="project.model.MyDoc">
+      <point x="-64.125" y="-27.5" />
+      <point x="872.6666666666666" y="454.0" />
+      <point x="791.1715277777777" y="454.0" />
+      <point x="16.0" y="26.5" />
+    </edge>
+    <edge source="project.model.MyDoc" target="project.model.MyPDFParser">
+      <point x="40.0" y="26.5" />
+      <point x="815.1715277777777" y="424.0" />
+      <point x="1000.9166666666666" y="424.0" />
+      <point x="64.125" y="-27.5" />
+    </edge>
+    <edge source="project.controller.qr_buffimage_generator" target="project.controller.url.DomainNameGetter">
+      <point x="34.0" y="-26.5" />
+      <point x="1219.6225694444445" y="454.0" />
+      <point x="1310.6111111111113" y="454.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="groovyjarjarcommonscli" target="groovyjarjarcommonscli">
+      <point x="-68.0" y="26.5" />
+      <point x="620.0" y="993.7109375" />
+      <point x="532.0" y="993.7109375" />
+      <point x="532.0" y="960.4609375" />
+      <point x="-136.0" y="13.25" />
+    </edge>
+    <edge source="project.controller.qr_buffimage_generator" target="project.model.information.Information">
+      <point x="-102.0" y="-26.5" />
+      <point x="1083.6225694444445" y="414.0" />
+      <point x="844.3611111111112" y="414.0" />
+      <point x="844.3611111111112" y="195.0" />
+      <point x="371.52083333333326" y="195.0" />
+      <point x="51.0" y="85.0" />
+    </edge>
+    <edge source="project.controller.qr_buffimage_generator" target="project.controller.url.FaviconGetter">
+      <point x="102.0" y="-26.5" />
+      <point x="1287.6225694444445" y="464.0" />
+      <point x="1494.6111111111113" y="464.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="project.model.information.Link" target="project.model.information.Information">
+      <point x="24.749999999999886" y="-50.5" />
+      <point x="286.2499999999999" y="195.0" />
+      <point x="303.52083333333326" y="195.0" />
+      <point x="-17.0" y="85.0" />
+    </edge>
+    <edge source="project.view" target="project.model.Page">
+      <point x="0.0" y="-26.5" />
+      <point x="586.7069444444446" y="681.0" />
+      <point x="585.4416666666666" y="681.0" />
+      <point x="585.4416666666666" y="404.0" />
+      <point x="632.8302083333335" y="404.0" />
+      <point x="110.80000000000007" y="50.5" />
+    </edge>
+    <edge source="project.controller.extractor" target="project.controller.extractor">
+      <point x="-33.599999999999994" y="26.5" />
+      <point x="455.5381944444444" y="591.0" />
+      <point x="375.13819444444437" y="591.0" />
+      <point x="375.13819444444437" y="534.5" />
+      <point x="-84.0" y="-0.0" />
+    </edge>
+    <edge source="project.controller.qr_inserter" target="project.model.MyDoc">
+      <point x="61.33333333333326" y="-26.5" />
+      <point x="314.4715277777776" y="414.0" />
+      <point x="735.1715277777777" y="414.0" />
+      <point x="-40.0" y="26.5" />
+    </edge>
+    <edge source="project.view" target="project.controller.qr_buffimage_generator">
+      <point x="51.200000000000045" y="-26.5" />
+      <point x="637.9069444444447" y="671.0" />
+      <point x="1117.6225694444445" y="671.0" />
+      <point x="-68.0" y="26.5" />
+    </edge>
+    <edge source="project.controller.extractor" target="project.model.Page">
+      <point x="37.33333333333337" y="-26.5" />
+      <point x="526.4715277777777" y="404.0" />
+      <point x="577.4302083333334" y="404.0" />
+      <point x="55.39999999999998" y="50.5" />
+    </edge>
+    <edge source="project.view" target="project.view">
+      <point x="-42.66666666666666" y="26.5" />
+      <point x="544.0402777777779" y="774.0" />
+      <point x="502.70694444444456" y="774.0" />
+      <point x="502.70694444444456" y="727.5" />
+      <point x="-64.0" y="-0.0" />
+    </edge>
+    <edge source="project.view" target="project.Main">
+      <point x="42.66666666666674" y="26.5" />
+      <point x="629.3736111111114" y="794.0" />
+      <point x="628.0402777777779" y="794.0" />
+      <point x="20.0" y="-26.5" />
+    </edge>
+    <edge source="groovyjarjarantlr" target="groovyjarjarantlr">
+      <point x="-77.33333333333333" y="26.5" />
+      <point x="78.66666666666667" y="998.1276041666666" />
+      <point x="20.0" y="998.1276041666666" />
+      <point x="20.0" y="969.2942708333333" />
+      <point x="-116.0" y="17.666666666666668" />
+    </edge>
+    <edge source="project.controller.extractor" target="project.model.information.Information">
+      <point x="-37.33333333333337" y="-26.5" />
+      <point x="451.804861111111" y="384.0" />
+      <point x="340.37708333333336" y="384.0" />
+      <point x="340.37708333333336" y="195.0" />
+      <point x="337.52083333333326" y="195.0" />
+      <point x="17.0" y="85.0" />
+    </edge>
+    <edge source="project.controller.url.DomainNameGetter" target="project.controller.url.DomainNameGetter.genericTopLevelDomain">
+      <point x="44.0" y="-26.5" />
+      <point x="1354.6111111111113" y="195.0" />
+      <point x="1364.6111111111113" y="195.0" />
+      <point x="54.0" y="26.5" />
+    </edge>
+    <edge source="project.view" target="project.controller.extractor">
+      <point x="-17.066666666666606" y="-26.5" />
+      <point x="569.640277777778" y="631.0" />
+      <point x="522.7381944444444" y="631.0" />
+      <point x="33.60000000000002" y="26.5" />
+    </edge>
+    <edge source="project.controller.FileStream" target="project.model.MyDoc">
+      <point x="-32.0" y="-50.5" />
+      <point x="690.1850694444444" y="454.0" />
+      <point x="767.1715277777777" y="454.0" />
+      <point x="-8.0" y="26.5" />
+    </edge>
+    <edge source="bsh" target="bsh">
+      <point x="40.0" y="26.5" />
+      <point x="457.0" y="1018.1276041666666" />
+      <point x="317.0" y="1018.1276041666666" />
+      <point x="317.0" y="933.9609375" />
+      <point x="-60.0" y="-17.66666666666667" />
+    </edge>
+    <edge source="project.controller.qr_inserter" target="project.model.Qr">
+      <point x="-61.33333333333326" y="-26.5" />
+      <point x="191.8048611111111" y="454.0" />
+      <point x="160.0" y="454.0" />
+      <point x="64.0" y="62.0" />
+    </edge>
+    <edge source="project.controller.extractor" target="project.model.information.Link">
+      <point x="-56.0" y="-26.5" />
+      <point x="433.13819444444437" y="394.0" />
+      <point x="298.6249999999999" y="394.0" />
+      <point x="37.124999999999886" y="50.5" />
+    </edge>
+    <edge source="project.controller.extractor" target="project.model.MyDoc">
+      <point x="56.0" y="-26.5" />
+      <point x="545.1381944444444" y="424.0" />
+      <point x="743.1715277777777" y="424.0" />
+      <point x="-32.0" y="26.5" />
+    </edge>
+    <edge source="project.view" target="project.model.MyDoc">
+      <point x="42.66666666666674" y="-26.5" />
+      <point x="629.3736111111114" y="661.0" />
+      <point x="840.7916666666666" y="661.0" />
+      <point x="840.7916666666666" y="464.0" />
+      <point x="783.1715277777777" y="464.0" />
+      <point x="8.0" y="26.5" />
+    </edge>
+    <edge source="project.view" target="project.model.Qr">
+      <point x="-59.73333333333335" y="-26.5" />
+      <point x="526.9736111111113" y="681.0" />
+      <point x="87.4666666666667" y="681.0" />
+      <point x="87.4666666666667" y="464.0" />
+      <point x="32.0" y="464.0" />
+      <point x="-64.0" y="62.0" />
+    </edge>
+    <edge source="project.view" target="project.model.information.Link">
+      <point x="-42.66666666666674" y="-26.5" />
+      <point x="544.0402777777779" y="661.0" />
+      <point x="146.49687500000016" y="661.0" />
+      <point x="146.49687500000016" y="464.0" />
+      <point x="224.375" y="464.0" />
+      <point x="-37.125" y="50.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9" x="797.2222222222222" y="323.3333333333333" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

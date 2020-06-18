@@ -6,41 +6,29 @@
 
 <AnchorPane prefHeight="646.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.view.MainViewController">
    <children>
-      <GridPane layoutX="14.0" layoutY="22.0" prefHeight="626.0" prefWidth="600.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="582.0" minHeight="10.0" prefHeight="581.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="308.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <GridPane fx:id="controlPane" visible="false" GridPane.rowIndex="1">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button fx:id="btnPrev" visible="false" prefHeight="33.0" prefWidth="210.0" text="이전 페이지" />
-                  <Button fx:id="btnNext" mnemonicParsing="false" prefHeight="27.0" prefWidth="219.0" text="다음 페이지" GridPane.columnIndex="2" />
-               </children>
-            </GridPane>
-            <ImageView fx:id="imgDoc" fitHeight="582.0" fitWidth="603.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgDoc" fitHeight="582.0" fitWidth="603.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
 
             </ImageView>
+      <GridPane fx:id="controlPane" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnPrev" prefHeight="33.0" prefWidth="210.0" text="이전 페이지" visible="false" />
+            <Button fx:id="btnNext" mnemonicParsing="false" prefHeight="27.0" prefWidth="219.0" text="다음 페이지" GridPane.columnIndex="2" />
          </children>
       </GridPane>
-      <HBox prefHeight="18.0" prefWidth="600.0" style="-fx-background-color: gray;">
+      <HBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: gray;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="btnOpen" mnemonicParsing="false" prefHeight="22.0" prefWidth="119.0" text="문서 불러오기" />
-            <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="22.0" prefWidth="89.0" text="저장" />
-            <Button fx:id="btnConversion" mnemonicParsing="false" prefHeight="22.0" prefWidth="83.0" text="변환" />
-            <Label fx:id="labelDoc" prefHeight="48.0" prefWidth="309.0" text="" />
+            <Button fx:id="btnOpen" mnemonicParsing="false" prefHeight="30.0" prefWidth="119.0" text="문서 불러오기" />
+            <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" text="저장" />
+            <Button fx:id="btnConversion" mnemonicParsing="false" prefHeight="30.0" prefWidth="83.0" text="변환" />
+            <Label fx:id="labelDoc" prefHeight="30.0" prefWidth="314.0" text="" />
          </children>
       </HBox>
    </children>

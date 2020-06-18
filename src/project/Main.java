@@ -3,6 +3,7 @@ package project;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import project.view.MainViewController;
@@ -36,6 +37,10 @@ public class Main extends Application {
 			 if(System.getProperty("inp") != null) {
 				 controller.setParameter(defalutPath);
 			 }
+			 ImageView img = controller.getImgDoc();
+			 img.fitWidthProperty().bind(root.widthProperty());
+			 img.fitHeightProperty().bind(root.heightProperty().multiply(0.95).subtract(controller.getControlPane().heightProperty()));
+
 			Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();	

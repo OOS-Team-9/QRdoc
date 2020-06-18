@@ -6,17 +6,17 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import project.model.MyDoc;
-import project.model.Page;
-import project.model.QRcode;
+import project.model.Qr;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 미주로 QR-code 삽입하는 클래스
  */
-public class EndNoteQRinserter extends QRinserter {
+public class EndQRinserter implements QRinserter {
 
     /**
      * PDF 파일에 QR-code를 삽입한 다음, "[원래 문서 이름]~QR.pdf" 이름으로 저장하는 함수
@@ -24,7 +24,7 @@ public class EndNoteQRinserter extends QRinserter {
      * @param qrCodeList PDF파일에 삽입할 QR-code 모음
      * @throws IOException
      */
-    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder) throws IOException {
+    public void insert(List<List<Qr>> qrCodeList, MyDoc myDoc, int pageOrder) throws IOException {
         // 변수 선언 및 정의
         int i = 1, j, l = 0, m = 0, n = 0, t = 0, p = 0; // i=QRcode파일 카운터,n=QRcode 지수,l=한줄에 4개 카운트,t=qrCodeList의 페이지내
         // 링크 수,p=qrCodeList의 페이지 수
@@ -38,9 +38,9 @@ public class EndNoteQRinserter extends QRinserter {
         doc = myDoc;
 
         // QR코드 전체 개수 구하기
-        ArrayList<QRcode> qrCodeListOneLine = new ArrayList<>();
-        for (ArrayList<QRcode> qrCodeListPerPage : qrCodeList) {
-            for (QRcode qr : qrCodeListPerPage) {
+        List<Qr> qrCodeListOneLine = new ArrayList<>();
+        for (List<Qr> qrCodeListPerPage : qrCodeList) {
+            for (Qr qr : qrCodeListPerPage) {
                 if (qr.getCheckInserted())
                     qrCodeListOneLine.add(qr);
             }
@@ -123,7 +123,7 @@ public class EndNoteQRinserter extends QRinserter {
                         n++;
                         while (!qrCodeListOneLine.get(n - 1).getCheckInserted())
                             n++;
-                        tempImage = qrCodeListOneLine.get(n - 1).getImage();
+                        tempImage = qrCodeListOneLine.get(n - 1).getBufferedImage();
                         pdImage = LosslessFactory.createFromImage(doc, tempImage);// Creating PDImageXObject object
                         contents.drawImage(pdImage, 140 * (l) + 48, ((((tempTotal - 1) % 20) / 4) + 1 - m) * 150 - 125);
                         i++;
@@ -144,7 +144,7 @@ public class EndNoteQRinserter extends QRinserter {
     }
 
     @Override
-    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Integer[] availableBlank)
+    public void insert(List<List<Qr>> qrCodeList, MyDoc myDoc, int pageOrder, Integer[] availableBlank)
             throws IOException {
         // TODO Auto-generated method stub
 
