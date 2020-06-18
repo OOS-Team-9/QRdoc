@@ -175,7 +175,7 @@ abstract public class Extractor<T extends Information> {
                 for (int y = 0; y < 16; y++) {
                     if (p.isThereBlankAt(x,y)&&p.isThereBlankAt(x+1,y)&&p.isThereBlankAt(x,y+1)&&p.isThereBlankAt(x+1,y+1)) {
                         p.addAvailableBlankForQRcode(x, y);
-                        System.out.println(x+","+y);
+                        //System.out.println(x+","+y);
                     }
                 }
             }

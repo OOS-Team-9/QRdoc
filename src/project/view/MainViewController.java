@@ -134,11 +134,12 @@ public class MainViewController implements Initializable {
 			FootNoteQRinserter footQrInseter=new FootNoteQRinserter();
 			BlankQRinserter blankQrInserter=new BlankQRinserter();
 			EndNoteQRinserter qrInserter = new EndNoteQRinserter();
-			//boolean hasToInsertInEndNote=false;
+
 
 			for(int pageOrder=0;pageOrder<linkList.size();pageOrder++){
 				Page page=linkExtractor.getPageList().get(pageOrder);
 				ArrayList<Integer[]> allBlank =page.getAvailableBlankForQRcode();
+				boolean hasToInsertInEndNote=false;
 				int footBlankCount=0;
 
 				for(int j=0;j<allBlank.size();j++) {
@@ -147,11 +148,11 @@ public class MainViewController implements Initializable {
 				}
 				System.out.println("아래여백개수:"+footBlankCount);
 				if (footBlankCount==11) {                            //페이지 아래 간격이 충분해서 각주삽입
-					System.out.println("footnote Insert");
+					System.out.println("****footnote Insert"+pageOrder);
 					footQrInseter.insert(qrCodeObjList, myDoc, pageOrder);
 				}
-				else if (allBlank.size()>=linkList.get(pageOrder).size()*4) {        //큐알코드 한 개당 4개의 큐알코드 여백이 사라지므로
-					System.out.println("blank Insert");
+				else if (allBlank.size()>=linkList.get(pageOrder).size()*9) {        //큐알코드 한 개당 4개의 큐알코드 여백이 사라지므로
+					System.out.println("****blank Insert"+pageOrder);
 					for (int infoOrder = 0; infoOrder < linkList.get(pageOrder).size(); infoOrder++) {
 						Integer[] blankPos=linkExtractor.findClosestBlank(page, linkList.get(pageOrder).get(infoOrder));
 						System.out.println("선택된 여백 위치:"+blankPos[0]+","+blankPos[1]);
@@ -165,7 +166,14 @@ public class MainViewController implements Initializable {
 						linkExtractor.findBlankForQRcode();
 					}
 				}
-				qrInserter.insert(qrCodeObjList, myDoc, 0);//0 의미없음
+				else{
+					hasToInsertInEndNote=true;
+				}
+				if(hasToInsertInEndNote) {
+					System.out.println("*****미주"+pageOrder);
+					qrInserter.insert(qrCodeObjList, myDoc, 0);//0 의미없음
+
+				}
 			}
 
 			} catch (IOException e) {
