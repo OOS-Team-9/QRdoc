@@ -60,7 +60,7 @@ public class BlankQRinserter extends QRinserter {
             contents.endText();
             tempImage = qrCodeList.get(pageOrder).get(j).getImage();
             pdImage = LosslessFactory.createFromImage(myDoc, tempImage);// Creating PDImageXObject
-            contents.drawImage(pdImage, 45 + 50*availableBlank[0], 20 + 50*availableBlank[1]);// 여기서 각주 위치 조정 가능
+            contents.drawImage(pdImage,  50*availableBlank[0], 50*availableBlank[1]);// 여기서 각주 위치 조정 가능
             System.out.println("Image inserted");
             contents.close();
             qrCodeList.get(pageOrder).get(j).setCheckInserted(false);
