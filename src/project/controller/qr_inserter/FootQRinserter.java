@@ -6,19 +6,19 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import project.model.MyDoc;
-import project.model.Page;
-import project.model.QRcode;
+import project.model.Qr;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 각주로 QR-code 삽입하는 클래스
  */
-public class FootNoteQRinserter extends QRinserter {
+public class FootQRinserter implements QRinserter {
     @Override
-    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder) throws IOException {
+    public void insert(List<List<Qr>> qrCodeList, MyDoc myDoc, int pageOrder) throws IOException {
 
         int QRcount = 0, size = 4;// QRcount=pageOrder이전 페이지까지의 qr코드 수,각주의 size는 최대 4
         String s;
@@ -54,7 +54,7 @@ public class FootNoteQRinserter extends QRinserter {
             contents.endText();
 
             for (int i = 0; i < size; i++) {
-                tempImage = qrCodeList.get(pageOrder).get(i).getImage();
+                tempImage = qrCodeList.get(pageOrder).get(i).getBufferedImage();
                 qrCodeList.get(pageOrder).get(i).setCheckInserted(false);// 나중의 미주, 여백삽입시 false체크
                 pdImage = LosslessFactory.createFromImage(myDoc, tempImage);// Creating PDImageXObject
                 contents.drawImage(pdImage, 140 * i + 48, 10);// 여기서 각주 위치 조정 가능
@@ -70,7 +70,7 @@ public class FootNoteQRinserter extends QRinserter {
     }
 
     @Override
-    public void insert(ArrayList<ArrayList<QRcode>> qrCodeList, MyDoc myDoc, int pageOrder, Integer[] availableBlank)
+    public void insert(List<List<Qr>> qrCodeList, MyDoc myDoc, int pageOrder, Integer[] availableBlank)
             throws IOException {
         // TODO Auto-generated method stub
 
