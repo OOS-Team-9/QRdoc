@@ -12,6 +12,7 @@ import project.model.information.Information;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -113,10 +114,13 @@ public class VisualQrBuffImageGenerator implements QrBuffImageGenerator {
             writeOnCombined(combinedBuffImage,  domainName, faviconBuffImage.getWidth() + 3, 0, 10);
             return combinedBuffImage;
         } catch (MalformedURLException e) {
+            BufferedImage qrBuffImage = generateQrBuffImage(info, qrHeight, qrWidth);
             e.printStackTrace();
+            return qrBuffImage;
         } catch (IOException e) {
+            BufferedImage qrBuffImage = generateQrBuffImage(info, qrHeight, qrWidth);
             e.printStackTrace();
+            return qrBuffImage;
         }
-        return null;
     }
 }
